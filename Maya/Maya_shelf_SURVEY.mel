@@ -1,0 +1,744 @@
+global proc shelf_SURVEY () {
+    global string $gBuffStr;
+    global string $gBuffStr0;
+    global string $gBuffStr1;
+
+
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Group selection" 
+        -enableBackground 0
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Group selection" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "GROUP" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "group.png" 
+        -image1 "group.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "import maya.cmds as cmds\n\nselection = cmds.ls(selection=True)\nif len(selection) < 1:\n    cmds.error(\"Nothing selected\")\ncmds.group(selection, n=\"grp_{}\".format(selection[0]))" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Group Trackingmarkers" 
+        -enableBackground 0
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Group trackingmarkers" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "GRPMK" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "group.png" 
+        -image1 "group.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "import maya.cmds as cmds\n\nselection = cmds.ls(selection=True)\nif len(selection) < 1:\n    cmds.error(\"Nothing selected\")\nparents = cmds.listRelatives(selection[0], parent=True)\n\nif parents:\n    cmds.group(selection, n=\"Trackingmarkers_{}\".format(parents[0]))\nelse:\n    cmds.group(selection, n=\"Trackingmarkers\")" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Draw path" 
+        -enableBackground 0
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Create open path" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "PATH" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "curveEP.png" 
+        -image1 "curveEP.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "import maya.cmds as cmds\nselected = cmds.ls(selection=True)\n\nif len(selected) < 2:\n    cmds.error(\"You must select at least two objects!\")\n\npoints = []\nfor item in selected:\n    pos = cmds.xform(item, query=True, rotatePivot=True, worldSpace=True)\n    points.append((pos[0], pos[1], pos[2]))\n    \ncurve = cmds.curve(d=1, ep=points, worldSpace=True)\ncmds.xform(curve, cp=True)\nlayer = cmds.listConnections(selected[0], type=\"displayLayer\")\nif layer:\n    cmds.editDisplayLayerMembers(layer, curve)\nparent = cmds.listRelatives(selected[0], parent=True)\nif parent:\n    cmds.parent(curve, parent)\ncmds.rename(curve, \"{}_path\".format(selected[0]))" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Draw path & hide selection" 
+        -enableBackground 0
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Create open path & hide selection" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "P&HIDE" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "curveEP.png" 
+        -image1 "curveEP.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "import maya.cmds as cmds\nselected = cmds.ls(selection=True)\n\nif len(selected) < 2:\n    cmds.error(\"You must select at least two objects!\")\n\npoints = []\nfor item in selected:\n    pos = cmds.xform(item, query=True, rotatePivot=True, worldSpace=True)\n    points.append((pos[0], pos[1], pos[2]))\n    \ncurve = cmds.curve(d=1, ep=points, worldSpace=True)\ncmds.xform(curve, cp=True)\nlayer = cmds.listConnections(selected[0], type=\"displayLayer\")\nif layer:\n    cmds.editDisplayLayerMembers(layer, curve)\nparent = cmds.listRelatives(selected[0], parent=True)\nif parent:\n    cmds.parent(curve, parent)\ncmds.rename(curve, \"{}_path\".format(selected[0]))\ncmds.hide(selected)" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Draw closed path" 
+        -enableBackground 0
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Create closed path" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "LOOP" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "square.png" 
+        -image1 "square.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "import maya.cmds as cmds\nselected = cmds.ls(selection=True)\n\nif len(selected) < 2:\n    cmds.error(\"You must select at least two objects!\")\n\npoints = []\nfor item in selected:\n    pos = cmds.xform(item, query=True, rotatePivot=True, worldSpace=True)\n    points.append((pos[0], pos[1], pos[2]))\n    \npoints.append(points[0])\ncurve = cmds.curve(d=1, ep=points, worldSpace=True)\ncmds.xform(curve, cp=True)\nlayer = cmds.listConnections(selected[0], type=\"displayLayer\")\nif layer:\n    cmds.editDisplayLayerMembers(layer, curve)\nparent = cmds.listRelatives(selected[0], parent=True)\nif parent:\n    cmds.parent(curve, parent)\ncmds.rename(curve, \"{}_path\".format(selected[0]))" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Draw closed path & hide selection" 
+        -enableBackground 0
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Create closed path & hide selection" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "L&HIDE" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "square.png" 
+        -image1 "square.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "import maya.cmds as cmds\nselected = cmds.ls(selection=True)\n\nif len(selected) < 2:\n    cmds.error(\"You must select at least two objects!\")\n\npoints = []\nfor item in selected:\n    pos = cmds.xform(item, query=True, rotatePivot=True, worldSpace=True)\n    points.append((pos[0], pos[1], pos[2]))\n    \npoints.append(points[0])\ncurve = cmds.curve(d=1, ep=points, worldSpace=True)\ncmds.xform(curve, cp=True)\nlayer = cmds.listConnections(selected[0], type=\"displayLayer\")\nif layer:\n    cmds.editDisplayLayerMembers(layer, curve)\nparent = cmds.listRelatives(selected[0], parent=True)\nif parent:\n    cmds.parent(curve, parent)\ncmds.rename(curve, \"{}_path\".format(selected[0]))\ncmds.hide(selected)" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Complete the 4th point in a rectangle" 
+        -enableBackground 0
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Complete rectangle" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "RECT" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "paintSkinWeights.png" 
+        -image1 "paintSkinWeights.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "import maya.cmds as cmds\nimport maya.api.OpenMaya as om\n\nsel = cmds.ls(selection=True)\n\nif len(sel) != 3:\n    cmds.error(\"You must select EXACTLY 3 locators/points for this function\")\n\nv1 = om.MVector(cmds.xform(sel[0], rp=1, ws=1, q=1))\nv2 = om.MVector(cmds.xform(sel[1], rp=1, ws=1, q=1))\nv3 = om.MVector(cmds.xform(sel[2], rp=1, ws=1, q=1))\n\nmidHyp = v1 + ((v3-v1)/2)\ndiag = midHyp + (midHyp-v2)\n#cmds.spaceLocator(p=midHyp)\n#newLoc = cmds.spaceLocator(n=\"{}_simluated_4th\".format(sel[0]), p=diag, a=1)\n#newLoc = cmds.duplicate(sel[0], name=\"{}_simluated_4th\".format(sel[0]))\nnewLoc = cmds.spaceLocator(name=\"{}_simluated_4th\".format(sel[0]))\ncmds.xform(newLoc, t=diag, ws=1)\nlocScaleX = cmds.getAttr(sel[0] + '.localScaleX')\nlocScaleY = cmds.getAttr(sel[0] + '.localScaleY')\nlocScaleZ = cmds.getAttr(sel[0] + '.localScaleZ')\ncmds.setAttr(newLoc[0] + \".localScaleX\", locScaleX)\ncmds.setAttr(newLoc[0] + \".localScaleY\", locScaleY)\ncmds.setAttr(newLoc[0] + \".localScaleZ\", locScaleZ)\n\nlayer = cmds.listConnections(sel[0], type=\"displayLayer\")\nif layer:\n    cmds.editDisplayLayerMembers(layer, newLoc[0])\nparent = cmds.listRelatives(sel[0], parent=True)\nif parent:\n    cmds.parent(newLoc[0], parent)\n\ncmds.select(sel[0], sel[1], sel[2], newLoc)\n" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Make ARC (and leave locators visible)" 
+        -enableBackground 0
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "3 point ARC" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "ARC" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "threePointArc.png" 
+        -image1 "threePointArc.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "// Grab selection\nstring $sel[] = `ls -selection`;\nif (size($sel) != 3) {\n    error(\"You must select EXACTLY 3 locators/points for this function\");\n}\n\n// Get some base values\n$arcName = \"threePtArc\";\n$curveName = $sel[0] + \"_arc\";\nstring $layer[] = `listConnections -type \"displayLayer\" $sel[0]`;\nstring $theParent[] = `listRelatives -parent $sel[0]`;\nstring $temp[];\n$pt1 = `xform -ws -q -t $sel[0]`;\n$pt2 = `xform -ws -q -t $sel[1]`;\n$pt3 = `xform -ws -q -t $sel[2]`;\n\n// Make the short arc\n$arc = `createNode makeThreePointCircularArc -n $arcName`;\nsetAttr ($arc + \".pt1\") $pt1[0] $pt1[1] $pt1[2];\nsetAttr ($arc + \".pt2\") $pt2[0] $pt2[1] $pt2[2];\nsetAttr ($arc + \".pt3\") $pt3[0] $pt3[1] $pt3[2];\nsetAttr ($arc + \".d\") 3;\nsetAttr ($arc + \".s\") 8;\n$curve = `createNode nurbsCurve`;\nstring $parent[] = `listRelatives -parent $curve`;\nconnectAttr ($arc + \".oc\") ($curve + \".cr\");\nif ($layer[0] != \"\") {\n\teditDisplayLayerMembers -noRecurse $layer[0] $parent[0];\n}\nif ($theParent[0] != \"\") {\n\t$temp = `parent $curve $theParent[0]`;\n\t$curve = $temp[0];\n}\n$curve = `rename $parent[0] $curveName`;\nselect $curve;\nprint \"\";" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Make CIRCLE (and hide locators)" 
+        -enableBackground 0
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "3 point CIRCLE" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "CIRCLE" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "circle.png" 
+        -image1 "circle.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "// Grab selection\nstring $sel[] = `ls -selection`;\nif (size($sel) != 3) {\n    error(\"You must select EXACTLY 3 locators/points for this function\");\n}\n\n// Get some base values\n$arcName = \"threePtArc\";\n$curveName = $sel[0] + \"_arc\";\nstring $layer[] = `listConnections -type \"displayLayer\" $sel[0]`;\nstring $theParent[] = `listRelatives -parent $sel[0]`;\nstring $temp[];\n$pt1 = `xform -ws -q -t $sel[0]`;\n$pt2 = `xform -ws -q -t $sel[1]`;\n$pt3 = `xform -ws -q -t $sel[2]`;\n\n// Make the short arc\n$arc = `createNode makeThreePointCircularArc -n $arcName`;\nsetAttr ($arc + \".pt1\") $pt1[0] $pt1[1] $pt1[2];\nsetAttr ($arc + \".pt2\") $pt2[0] $pt2[1] $pt2[2];\nsetAttr ($arc + \".pt3\") $pt3[0] $pt3[1] $pt3[2];\nsetAttr ($arc + \".d\") 3;\nsetAttr ($arc + \".s\") 8;\n$curve = `createNode nurbsCurve`;\nstring $parent[] = `listRelatives -parent $curve`;\nconnectAttr ($arc + \".oc\") ($curve + \".cr\");\nif ($layer[0] != \"\") {\n\teditDisplayLayerMembers -noRecurse $layer[0] $parent[0];\n}\n$curve1 = `rename $parent[0] $curveName`;\nif ($theParent[0] != \"\") {\n\t$temp = `parent $curve1 $theParent[0]`;\n\t$curve1 = $temp[0];\n}\n\n// Make the long arc\n$arc = `createNode makeThreePointCircularArc -n $arcName`;\nsetAttr ($arc + \".pt1\") $pt1[0] $pt1[1] $pt1[2];\nsetAttr ($arc + \".pt3\") $pt2[0] $pt2[1] $pt2[2];\nsetAttr ($arc + \".pt2\") $pt3[0] $pt3[1] $pt3[2];\nsetAttr ($arc + \".d\") 3;\nsetAttr ($arc + \".s\") 8;\n$curve = `createNode nurbsCurve`;\n$parent = `listRelatives -parent $curve`;\n//print $curve;\nconnectAttr ($arc + \".oc\") ($curve + \".cr\");\nif ($layer[0] != \"\") {\n\teditDisplayLayerMembers -noRecurse $layer[0] $parent[0];\n}\n$curve2 = `rename $parent[0] $curveName`;\nif ($theParent[0] != \"\") {\n\t$temp = `parent $curve2 $theParent[0]`;\n\t$curve2 = $temp[0];\n}\n\n// Hide the locators\nhide $sel;\n\n// Group the curves\n$grp = `group $curve1 $curve2`;\nrename $grp (\"circle_\" + $sel[0]);" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Duplicate selected objects" 
+        -enableBackground 0
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Duplicate selected" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "DUPE" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "locator.png" 
+        -image1 "locator.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "import maya.cmds as cmds\n\nselected = cmds.ls(selection=True)\ndupes = []\nfor obj in selected:\n    parents = cmds.listRelatives(obj, parent=True)\n    if parents:\n        tmp = cmds.duplicate(obj, name=\"dupe_{}_{}\".format(parents[0], obj))\n    else:\n        tmp = cmds.duplicate(obj, name=\"dupe_{}\".format(obj))\n    dupes.append(tmp[0])\n\nif len(selected) > 1:\n    group = cmds.group(dupes, name=\"{}_etc\".format(dupes[0]))\n    cmds.select(group)\nelse:\n    cmds.select(dupes)" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Add to \"dollytracks_etc\" layer" 
+        -enableBackground 0
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "editDisplayLayerMembers -noRecurse dollytracks_etc `ls -selectio..." 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Dolly" 
+        -overlayLabelColor 0.201794 0.201794 0.201794 
+        -overlayLabelBackColor 0 1 1 0.9 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "editDisplayLayerMembers -noRecurse dollytracks_etc `ls -selection`;" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Add to \"camera\" layer" 
+        -enableBackground 0
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "editDisplayLayerMembers -noRecurse camera `ls -selection`;" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Cam" 
+        -overlayLabelColor 0 0 0 
+        -overlayLabelBackColor 1 1 1 0.9 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "editDisplayLayerMembers -noRecurse camera `ls -selection`;" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Add to \"bluescreens\" layer" 
+        -enableBackground 0
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "bluescreens layer" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Bluescreens" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 1 0.9 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "editDisplayLayerMembers -noRecurse bluescreens `ls -selection`;" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Add to \"tracking markers\" layer" 
+        -enableBackground 0
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "editDisplayLayerMembers -noRecurse tracking_markers `ls -selection`;" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Tracking" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 1 0 0 0.9 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "editDisplayLayerMembers -noRecurse tracking_markers `ls -selection`;" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Add to \"HDRI\" layer" 
+        -enableBackground 0
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "editDisplayLayerMembers -noRecurse hdri `ls -selection`;" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "HDRI" 
+        -overlayLabelColor 0.218236 0.218236 0.218236 
+        -overlayLabelBackColor 1 1 0 0.8 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "editDisplayLayerMembers -noRecurse hdri `ls -selection`;" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Add to \"groundplanes\" layer" 
+        -enableBackground 0
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "editDisplayLayerMembers -noRecurse groundplanes `ls -selection`;" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Ground" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0.207773 0.207773 0.207773 0.7 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "editDisplayLayerMembers -noRecurse groundplanes `ls -selection`;" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Add to \"setpieces\" layer" 
+        -enableBackground 0
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "editDisplayLayerMembers -noRecurse setpieces `ls -selection`;" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Sets" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0.479 0 0.9 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "editDisplayLayerMembers -noRecurse setpieces `ls -selection`;" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Add to \"characters\" layer" 
+        -enableBackground 0
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "editDisplayLayerMembers -noRecurse characters `ls -selection`;" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Characters" 
+        -overlayLabelColor 0.189836 0.189836 0.189836 
+        -overlayLabelBackColor 0.179317 1 0 0.9 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "editDisplayLayerMembers -noRecurse characters `ls -selection`;" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Add to \"slates\" layer" 
+        -enableBackground 0
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "editDisplayLayerMembers -noRecurse slates `ls -selection`;" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Slates" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 1 0 1 0.9 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "editDisplayLayerMembers -noRecurse slate_origins `ls -selection`;" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Add to \"ligths\" layer" 
+        -enableBackground 0
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "lights layer" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Lights" 
+        -overlayLabelColor 0 0 0 
+        -overlayLabelBackColor 0.786823 0.795217 0.0154626 0.8 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "editDisplayLayerMembers -noRecurse lights_etc `ls -selection`;" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Create display layers" 
+        -enableBackground 0
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Create layers" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "LAYERS" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "import maya.cmds as cmds\n\n# layer name, color index\nnewLayers = [\n    (\"dollytracks_etc\", 18),\n    (\"camera\", 16),\n    (\"tracking_markers\", 13),\n    (\"bluescreens\", 6),\n    (\"hdri\", 17),\n    (\"groundplanes\", 3),\n    (\"setpieces\", 23),\n    (\"characters\", 14),\n    (\"slate_origins\", 9),\n    (\"lights_etc\", 25)\n]\n\n# existing layers in scene\ncurLayers = cmds.ls(type=\"displayLayer\")\n\n# create\nfor layer in newLayers:\n    if layer[0] not in curLayers:\n        l = cmds.createDisplayLayer(name=layer[0], empty=True)\n        cmds.setAttr(\"{}.displayType\".format(l), 0)\n        cmds.setAttr(\"{}.color\".format(l), layer[1])\n        cmds.setAttr(\"{}.overrideColorRGB\".format(l), 0, 0, 0)\n        cmds.setAttr(\"{}.overrideRGBColors\".format(l), 0)" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Import Total Station Data" 
+        -enableBackground 0
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Import TotalStation data" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "IMPORT" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "source importTotalStation.mel;\nimportTotalStationGUI();" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "New Import TotalStation data script" 
+        -enableBackground 0
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "IMPORT" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "IMPORT" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "pythonFamily.png" 
+        -image1 "pythonFamily.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "try:\n    reload(importTotalStation)\nexcept:\n    import importTotalStation" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+
+} 
