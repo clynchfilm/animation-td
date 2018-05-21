@@ -8,8 +8,8 @@
 # Install:
 # 1. Use Maya.env to target your script and icons folder, or copy the contents locally
 # 2. Execute the following Python commands in Maya (or add to shelf):
-#       import Proxi_Rigging
-#       reload(Proxi_Rigging)
+#       import Maya_RiggingTools
+#       reload(Maya_RiggingTools)
 
 
 
@@ -53,7 +53,7 @@ def createGUI():
     global freezeS
 
     #initialize the window
-    ccWin = cmds.window(winName, title = 'Rigging Tools v0.1', resizeToFitChildren = 1,  sizeable = 0)
+    ccWin = cmds.window(winName, title = 'Rigging Tools v1.0', resizeToFitChildren = 1,  sizeable = 0)
     
     #the main layout -- column
     mainLayout = cmds.columnLayout( adjustableColumn = 1, width = 325, rowSpacing=5)
@@ -65,11 +65,11 @@ def createGUI():
     cmds.gridLayout(numberOfColumns = 8, cellWidthHeight = (40, 40), width = 100)
     
     #icons of the "controllers"
-    cmds.symbolButton(image='rigging_icons/locator.png',           command=mz_ccButtonSnap09)
+    cmds.symbolButton(image='rigging_icons/locator.png',           command=snapLocator)
     cmds.symbolButton(image='rigging_icons/circle.png',            command=snapCircle)
-    cmds.symbolButton(image='rigging_icons/circleCross.png',       command=mz_ccButtonSnap23)
-    cmds.symbolButton(image='rigging_icons/dome.png',              command=mz_ccButtonSnap14)
-    cmds.symbolButton(image='rigging_icons/sphere.png',            command=mz_ccButtonSnap10)
+    cmds.symbolButton(image='rigging_icons/circleCross.png',       command=snapCircleCross)
+    cmds.symbolButton(image='rigging_icons/dome.png',              command=snapDome)
+    cmds.symbolButton(image='rigging_icons/sphere.png',            command=snapSphere)
     cmds.symbolButton(image='rigging_icons/square.png',            command=snapSquare)
     cmds.symbolButton(image='rigging_icons/cube.png',              command=snapCube)
     cmds.symbolButton(image='rigging_icons/triangle.png',          command=snapTriangle)
@@ -77,59 +77,59 @@ def createGUI():
     cmds.symbolButton(image='rigging_icons/pyramid.png',           command=snapPyramid)
     cmds.symbolButton(image='rigging_icons/cone.png',              command=snapCone)
     cmds.symbolButton(image='rigging_icons/spearTip.png',          command=snapSpearTip)
-    cmds.symbolButton(image='rigging_icons/squareTip.png',         command=mz_ccButtonSnap26)
+    cmds.symbolButton(image='rigging_icons/squareTip.png',         command=snapSquareTip)
     cmds.symbolButton(image='rigging_icons/rombus.png',            command=snapRombus)
-    cmds.symbolButton(image='rigging_icons/arrowDown.png',         command=mz_ccButtonSnap35)
+    cmds.symbolButton(image='rigging_icons/arrowDown.png',         command=snapArrowDown)
     cmds.symbolButton(image='rigging_icons/arrowDouble.png',       command=snapArrowDouble)
     cmds.symbolButton(image='rigging_icons/arrow90.png',           command=snapArrow90)
     
     cmds.symbolButton(image='rigging_icons/arrow180.png',          command=snapArrow180)
-    cmds.symbolButton(image='rigging_icons/arrowCircle.png',       command=mz_ccButtonSnap27)
+    cmds.symbolButton(image='rigging_icons/arrowCircle.png',       command=snapArrowCircle)
     cmds.symbolButton(image='rigging_icons/arrowCircleThin.png',   command=snapRotateArrow)
     cmds.symbolButton(image='rigging_icons/arrow180Thin.png',      command=snapArrowDoubleThin)
-    cmds.symbolButton(image='rigging_icons/arrowDoubleThin.png',   command=mz_ccButtonSnap07)
+    cmds.symbolButton(image='rigging_icons/arrowDoubleThin.png',   command=snapArrowDoubleThin)
     cmds.symbolButton(image='rigging_icons/cross.png',             command=snapCross)
     cmds.symbolButton(image='rigging_icons/arrowQuad.png',         command=snapArrowQuad)
     cmds.symbolButton(image='rigging_icons/arrowOcto.png',         command=snapArrowOcto)
     
-    cmds.symbolButton(image='rigging_icons/arrowQuad2.png',        command=mz_ccButtonSnap38)
-    cmds.symbolButton(image='rigging_icons/arrowDoubleCurved.png', command=mz_ccButtonSnap16)
-    cmds.symbolButton(image='rigging_icons/orient.png',            command=mz_ccButtonSnap15)
-    cmds.symbolButton(image='rigging_icons/basket.png',            command=mz_ccButtonSnap08)
-    cmds.symbolButton(image='rigging_icons/gizmo.png',             command=mz_ccButtonSnap28)
-    cmds.symbolButton(image='rigging_icons/curvedArrowhead.png',   command=mz_ccButtonSnap29)
-    cmds.symbolButton(image='rigging_icons/airplane.png',          command=mz_ccButtonSnap30)
-    cmds.symbolButton(image='rigging_icons/squiggleCircle.png',    command=mz_ccButtonSnap31)
+    cmds.symbolButton(image='rigging_icons/arrowQuad2.png',        command=snapArrowQuad2)
+    cmds.symbolButton(image='rigging_icons/arrowDoubleCurved.png', command=snapArrowDoubleCurved)
+    cmds.symbolButton(image='rigging_icons/orient.png',            command=snapOrient)
+    cmds.symbolButton(image='rigging_icons/basket.png',            command=snapBasket)
+    cmds.symbolButton(image='rigging_icons/gizmo.png',             command=snapGizmo)
+    cmds.symbolButton(image='rigging_icons/curvedArrowhead.png',   command=snapCurvedArrowhead)
+    cmds.symbolButton(image='rigging_icons/airplane.png',          command=snapAirplane)
+    cmds.symbolButton(image='rigging_icons/squiggleCircle.png',    command=snapSquiggleCircle)
     
-    cmds.symbolButton(image='rigging_icons/sunDial.png',           command=mz_ccButtonSnap32)
-    cmds.symbolButton(image='rigging_icons/boomerang.png',         command=mz_ccButtonSnap34)
-    cmds.symbolButton(image='rigging_icons/flower.png',            command=mz_ccButtonSnap39)
+    cmds.symbolButton(image='rigging_icons/sunDial.png',           command=snapSunDial)
+    cmds.symbolButton(image='rigging_icons/boomerang.png',         command=snapBoomerang)
+    cmds.symbolButton(image='rigging_icons/flower.png',            command=snapFlower)
     cmds.symbolButton(image='rigging_icons/cog.png',               command=snapCog)
     cmds.symbolButton(image='rigging_icons/spiral.png',            command=snapSpiral)
-    cmds.symbolButton(image='rigging_icons/laptop.png',            command=mz_ccButtonSnap41)
-    cmds.symbolButton(image='rigging_icons/cylinder.png',          command=mz_ccButtonSnap42)
-    cmds.symbolButton(image='rigging_icons/marker.png',            command=mz_ccButtonSnap43)
+    cmds.symbolButton(image='rigging_icons/laptop.png',            command=snapLaptop)
+    cmds.symbolButton(image='rigging_icons/cylinder.png',          command=snapCylinder)
+    cmds.symbolButton(image='rigging_icons/marker.png',            command=snapMarker)
     
-    cmds.symbolButton(image='rigging_icons/marker2.png',           command=mz_ccButtonSnap40)
-    cmds.symbolButton(image='rigging_icons/marker3.png',           command=mz_ccButtonSnap19)
-    cmds.symbolButton(image='rigging_icons/marker4.png',           command=mz_ccButtonSnap20)
-    cmds.symbolButton(image='rigging_icons/marker5.png',           command=mz_ccButtonSnap21)
-    cmds.symbolButton(image='rigging_icons/marker6.png',           command=mz_ccButtonSnap22)
+    cmds.symbolButton(image='rigging_icons/marker2.png',           command=snapMarker2)
+    cmds.symbolButton(image='rigging_icons/marker3.png',           command=snapMarker3)
+    cmds.symbolButton(image='rigging_icons/marker4.png',           command=snapMarker4)
+    cmds.symbolButton(image='rigging_icons/marker5.png',           command=snapMarker5)
+    cmds.symbolButton(image='rigging_icons/marker6.png',           command=snapMarker6)
     cmds.symbolButton(image='rigging_icons/bulb.png',              command=snapBulb)
     
     cmds.setParent(controllersLayout)
     cmds.frameLayout(label = 'Character specific', collapsable=True, collapse=False, height=107)
     cmds.scrollLayout(childResizable = 1)
     cmds.gridLayout(numberOfColumns = 8, cellWidthHeight = (40, 40), width = 100)
-    cmds.symbolButton(image='rigging_icons/tongue.png', command=mz_ccButtonSnap44)
-    cmds.symbolButton(image='rigging_icons/paw.png',    command=mz_ccButtonSnap45)
-    cmds.symbolButton(image='rigging_icons/eyes.png',   command=mz_ccButtonSnap36)
-    cmds.symbolButton(image='rigging_icons/ear.png',    command=mz_ccButtonSnap37)
-    cmds.symbolButton(image='rigging_icons/hand.png',   command=mz_ccButtonSnap11)
-    cmds.symbolButton(image='rigging_icons/shoe.png',   command=mz_ccButtonSnap12)
-    cmds.symbolButton(image='rigging_icons/male.png',   command=mz_ccButtonSnap24)
-    cmds.symbolButton(image='rigging_icons/female.png', command=mz_ccButtonSnap25)
-    cmds.symbolButton(image='rigging_icons/lips.png',   command=mz_ccButtonSnap33)
+    cmds.symbolButton(image='rigging_icons/tongue.png',            command=snapTongue)
+    cmds.symbolButton(image='rigging_icons/paw.png',               command=snapPaw)
+    cmds.symbolButton(image='rigging_icons/eyes.png',              command=snapEyes)
+    cmds.symbolButton(image='rigging_icons/ear.png',               command=snapEar)
+    cmds.symbolButton(image='rigging_icons/hand.png',              command=snapHand)
+    cmds.symbolButton(image='rigging_icons/shoe.png',              command=snapShoe)
+    cmds.symbolButton(image='rigging_icons/male.png',              command=snapMale)
+    cmds.symbolButton(image='rigging_icons/female.png',            command=snapFemale)
+    cmds.symbolButton(image='rigging_icons/lips.png',              command=snapLips)
     
     cmds.setParent(mainLayout)
     cmds.frameLayout(label = 'Color')
@@ -153,7 +153,7 @@ def createGUI():
     
 
 # Zero out controllers by adding an abstraction layer/group
-def zeroControllers(whatever):
+def zeroControllers(*args):
     # Get selected objects
     sel = cmds.ls(selection=True)
 
@@ -234,7 +234,7 @@ def unlockAttrs():
 
 
 #mirror X axis
-def mirrorX(self):
+def mirrorX():
     unlockAttrs()
     mirrorGrpX = cmds.group()
     cmds.xform(objectSpace = 1,  pivots = (0, 0, 0), scale = (-1, 1, 1))
@@ -243,7 +243,7 @@ def mirrorX(self):
 
 
 #mirror Y axis
-def mirrorY(self):
+def mirrorY():
     unlockAttrs()
     mirrorGrpY = cmds.group()
     cmds.xform(objectSpace = 1,  pivots = (0, 0, 0), scale = (1, -1, 1))
@@ -252,7 +252,7 @@ def mirrorY(self):
     
 
 #mirror Z axis
-def mirrorZ(self):
+def mirrorZ():
     unlockAttrs()
     mirrorGrpZ = cmds.group()
     cmds.xform(objectSpace = 1,  pivots = (0, 0, 0), scale = (1, 1, -1))
@@ -260,7 +260,7 @@ def mirrorZ(self):
     cmds.makeIdentity(apply = 1, translate = 1, rotate = 1, scale = 1, normal = 0)
 
 
-def combineShapes(self):
+def combineShapes(*args):
     #store the names of transform nodes
     selObj = cmds.ls(selection = 1)
     #freeze transformations
@@ -278,11 +278,11 @@ def combineShapes(self):
         cmds.select(selObj[-1], replace = 1)
 
 
-def centerPivot(self):
+def centerPivot(*args):
     cmds.xform(centerPivots = 1)
 
 
-def freezeTrans(self):
+def freezeTrans(*args):
     unlockAttrs()
     t = cmds.checkBox(freezeT, query=True, value = True)
     r = cmds.checkBox(freezeR, query=True, value = True)
@@ -290,8 +290,7 @@ def freezeTrans(self):
     cmds.makeIdentity(apply = 1, translate = t, rotate = r, scale = s, normal = 0)
     
 
-#shapeCircle
-def shapeCircle(self):
+def shapeCircle():
     circle = cmds.curve( degree = 3,\
                 knot = [-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],\
                 point = [(1.9590290622280626, 1.199559335247117e-016, -1.9590290622280595),\
@@ -306,33 +305,30 @@ def shapeCircle(self):
                          (-3.1607926519573314e-016, 1.6964330807777285e-016, -2.7704854688859699),\
                          (-1.9590290622280606, 1.1995593352471178e-016, -1.9590290622280606)]\
               )
-    #cmds.setAttr(circle + '.sx', 1.274)
-    #cmds.setAttr(circle + '.sy', 1.274)
-    #cmds.setAttr(circle + '.sz', 1.274)
-    #cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
+
+    #make group(s)
+    for i in xrange(numGroups()):
+        cmds.group()
+        cmds.xform(pivots = (0, 0, 0))
         
               
-#snapCircle
-def snapCircle(self):
-    #the selected object(s)
+def snapCircle(*args):
     selObj = cmds.ls(selection = 1)
     
     #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        shapeCircle(self)
+        shapeCircle()
         
-    
     #else, put the ctrl at the centre of the object(s)       
     else:
-        shapeCircle(self)
+        shapeCircle()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
         
-#shapeCube
-def shapeCube(self):
+def shapeCube():
     cube = cmds.curve(degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],\
                 point = [(-0.5, 0.5, -0.5),\
@@ -364,26 +360,23 @@ def shapeCube(self):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#snapCube
-def snapCube(self):
+def snapCube(*args):
     #the selected object(s)
     selObj = cmds.ls(selection = 1)
 
     #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        shapeCube(self)
+        shapeCube()
             
     #else, put the ctrl at the centre of the object(s)       
     else:
-        shapeCube(self)
+        shapeCube()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
-        
-        
-#shapeSpearTip
-def shapeSpearTip(self):
+         
+def shapeSpearTip():
     spear = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7],\
                 point = [(-2, 0, 0),\
@@ -406,26 +399,22 @@ def shapeSpearTip(self):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#snapSpearTip
-def snapSpearTip(self):
-    #the selected object(s)
+def snapSpearTip(*args):
     selObj = cmds.ls(selection = 1)
     
     #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        shapeSpearTip(self)
+        shapeSpearTip()
             
     #else, put the ctrl at the centre of the object(s)       
     else:
-        shapeSpearTip(self)
+        shapeSpearTip()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
                 
-        
-#shapeArrowDouble
-def shapeArrowDouble(self):
+def shapeArrowDouble():
     arrow = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],\
                 point = [(-4, 0, 0),\
@@ -451,26 +440,23 @@ def shapeArrowDouble(self):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#snapArrowDouble
-def snapArrowDouble(self):
+def snapArrowDouble(*args):
     #the selected object(s)
     selObj = cmds.ls(selection = 1)
     
     #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        shapeArrowDouble(self)
+        shapeArrowDouble()
             
     #else, put the ctrl at the centre of the object(s)       
     else:
-        shapeArrowDouble(self)
+        shapeArrowDouble()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
                
          
-        
-#shapeRotateArrow
-def shapeRotateArrow(self):
+def shapeRotateArrow():
     arrow = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,\
                         23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43],\
@@ -524,31 +510,28 @@ def shapeRotateArrow(self):
     cmds.setAttr(arrow + '.sz', 0.83)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#snapRotateArrow
-def snapRotateArrow(self):
-    #the selected object(s)
+def snapRotateArrow(*args):
     selObj = cmds.ls(selection = 1)
     
     #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        shapeRotateArrow(self)
+        shapeRotateArrow()
             
     #else, put the ctrl at the centre of the object(s)       
     else:
-        shapeRotateArrow(self)
+        shapeRotateArrow()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
                 
         
-        
-#shapeArrowDoubleThin
-def shapeArrowDoubleThin(self):
+def shapeArrowDoubleThin():
     arrow = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,\
 		                23, 24, 25, 26, 27, 28, 29, 30, 31],\
@@ -592,31 +575,28 @@ def shapeArrowDoubleThin(self):
     cmds.move(0, 0, 0, arrow + ".scalePivot", arrow + ".rotatePivot", absolute=True)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#snapArrowDoubleThin
-def snapArrowDoubleThin(self):
-    #the selected object(s)
+def snapArrowDoubleThin(*args):
     selObj = cmds.ls(selection = 1)
     
     #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        shapeArrowDoubleThin(self)
+        shapeArrowDoubleThin()
             
     #else, put the ctrl at the centre of the object(s)       
     else:
-        shapeArrowDoubleThin(self)
+        shapeArrowDoubleThin()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
                
          
-        
-#mz_ccButton07
-def mz_ccButton07(self):
+def shapeArrowDoubleThin():
     arrow = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],\
                 point = [(-2.187163, -0.5, -0.5),\
@@ -649,31 +629,28 @@ def mz_ccButton07(self):
     cmds.setAttr(arrow + '.sz', 0.65)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
+    
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap07
-def mz_ccButtonSnap07(self):
-    #the selected object(s)
+def snapArrowDoubleThin(*args):
     selObj = cmds.ls(selection = 1)
     
     #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton07(self)
+        shapeArrowDoubleThin()
             
     #else, put the ctrl at the centre of the object(s)       
     else:
-        mz_ccButton07(self)
+        shapeArrowDoubleThin()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
                 
         
-        
-#mz_ccButton08
-def mz_ccButton08(self):
+def shapeBasket():
     basket = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,\
                         24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45,\
@@ -742,33 +719,29 @@ def mz_ccButton08(self):
     cmds.setAttr(basket + '.sy', 0.9)
     cmds.setAttr(basket + '.sz', 0.9)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
-
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap08
-def mz_ccButtonSnap08(self):
-    #the selected object(s)
+def snapBasket(*args):
     selObj = cmds.ls(selection = 1)
     
     #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton08(self)
+        shapeBasket()
             
     #else, put the ctrl at the centre of the object(s)       
     else:
-        mz_ccButton08(self)
+        shapeBasket()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
-                              
-                      
-#mz_ccButton09
-def mz_ccButton09(self):
+                                            
+def shapeLocator():
     cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7],\
                 point = [(-2, 0, 0),\
@@ -781,31 +754,25 @@ def mz_ccButton09(self):
                          (0, -2, 0)]\
               )
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap09
-def mz_ccButtonSnap09(self):
-    #the selected object(s)
+def snapLocator(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton09(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeLocator()
     else:
-        mz_ccButton09(self)
+        shapeLocator()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
-        
                               
                       
-#mz_ccButton10
-def mz_ccButton10(self):
+def shapeSphere():
     sphere = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,\
                         21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38,\
@@ -875,27 +842,19 @@ def mz_ccButton10(self):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap10
-def mz_ccButtonSnap10(self):
-    #the selected object(s)
+def snapSphere(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton10(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeSphere()     
     else:
-        mz_ccButton10(self)
+        shapeSphere()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
-                
-        
-#mz_ccButton11
-def mz_ccButton11(self):
-    #handCtrl
+
+def shapeHand():
     handCtrl = cmds.curve( degree = 3,\
                 knot = [24.684238740000001, 24.684238740000001, 24.684238740000001, 25, 26, 27, 28, 29, 30,\
                         30.758475789999999, 31.626223939999999, 32.49397209, 33.361720239999997,\
@@ -935,8 +894,7 @@ def mz_ccButton11(self):
                          (1.9490290063797471, -1.7487533544678628, 0.0040290636225445492),\
                          (2.2261714875429148, -2.1410564949826609, 0.0040290636225444876)]\
               )
-    setColour()
-    #pinkyCtrl          
+    setColour()        
     pinkyCtrl = cmds.curve( degree = 3,\
                 knot = [0, 0, 0, 1, 2, 3, 4, 5, 5, 5],\
                 point = [(2.6686783300760872, -0.44376961119187402, -0.0040290636225455744),\
@@ -948,8 +906,7 @@ def mz_ccButton11(self):
                          (2.2740086422670838, 0.50071478431675587, -0.0040290636225454868),\
                          (1.8241121380753016, -0.15722036747739596, -0.004029063622545387)]\
               )
-    setColour()
-    #ringCtrl            
+    setColour()          
     ringCtrl = cmds.curve( degree = 3,\
                 knot = [0, 0, 0, 1, 2, 3, 4, 5, 5, 5],\
                 point = [(1.8241121380753391, -0.12705728919153217, -0.004029063622545387),\
@@ -961,8 +918,7 @@ def mz_ccButton11(self):
                          (1.277761133145221, 1.0448288145414268, -0.0040290636225452656),\
                          (0.8957443607257809, 0.18965503280862778, -0.0040290636225451806)]\
               )
-    setColour()
-    #midCtrl          
+    setColour()      
     midCtrl = cmds.curve( degree = 3,\
                 knot = [0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 7, 7],\
                 point = [(0.91921978950307892, 0.14441041538018454, -0.0040290636225451858),\
@@ -977,7 +933,6 @@ def mz_ccButton11(self):
                          (-0.15156948964073394, 0.20473657195151418, -0.0040290636225449481)]\
               )
     setColour()
-    #indexCtrl
     indexCtrl = cmds.curve( degree = 3,\
                 knot = [0, 0, 0, 1, 2, 3, 4, 5, 5, 5],\
                 point = [(-0.15516888382709695, 0.18965503280875284, -0.0040290636225449473),\
@@ -989,8 +944,7 @@ def mz_ccButton11(self):
                          (-0.99875751221016573, -0.11012363120669307, -0.0040290636225447599),\
                          (-1.0866249164986959, -1.8312712123360144, -0.0040290636225447408)]\
               )
-    setColour()
-    #thumbCtrl              
+    setColour()            
     thumbCtrl = cmds.curve( degree = 3,\
                 knot = [0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 8, 8],\
                 point = [(-1.0866249164987971, -1.5447219686213658, -0.0040290636225447408),\
@@ -1006,6 +960,7 @@ def mz_ccButton11(self):
                          (-1.3580926210703592, -3.4299143614802916, -0.0040290636225446801)]\
               )
     setColour()
+
     #put the fingers ctrl underneath the hand ctrl          
     cmds.parent(pinkyCtrl, handCtrl)
     cmds.parent(ringCtrl, handCtrl)
@@ -1017,31 +972,25 @@ def mz_ccButton11(self):
     cmds.setAttr(handCtrl + '.sy', 0.5)
     cmds.setAttr(handCtrl + '.sz', 0.5)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
+    
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap11
-def mz_ccButtonSnap11(self):
-    #the selected object(s)
+def snapHand(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton11(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeHand()   
     else:
-        mz_ccButton11(self)
+        shapeHand()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
                 
-        
-#mz_ccButton12
-def mz_ccButton12(self):
+def shapeShoe():
     cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,\
                         21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41],\
@@ -1089,31 +1038,25 @@ def mz_ccButton12(self):
                          (-0.54489100000000001, 0, -1.0972170000000001)]\
               )
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap12
-def mz_ccButtonSnap12(self):
-    #the selected object(s)
+def snapShoe(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton12(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeShoe()
     else:
-        mz_ccButton12(self)
+        shapeShoe()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
                 
-        
-#mz_ccButton13
-def mz_ccButton13(self):
+def mz_ccButton13():
     cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],\
                 point = [(-4.5, 0, 0),\
@@ -1143,31 +1086,25 @@ def mz_ccButton13(self):
                          (-4.5, 0, 0)]\
               )
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap13
-def mz_ccButtonSnap13(self):
-    #the selected object(s)
+def mz_ccButtonSnap13(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton13(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        mz_ccButton13()
     else:
-        mz_ccButton13(self)
+        mz_ccButton13()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
         
-
-#mz_ccButton14
-def mz_ccButton14(self):
+def shapeDome():
     cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,\
                         21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,\
@@ -1267,120 +1204,25 @@ def mz_ccButton14(self):
                          (0, 0, -2.5135056000000002)]\
               )
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap14
-def mz_ccButtonSnap14(self):
-    #the selected object(s)
+def snapDome(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton14(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeDome()
     else:
-        mz_ccButton14(self)
+        shapeDome()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
                 
-        
-#mz_ccButton15
-def mz_ccButton15(self):
-    # cmds.curve( degree = 1,\
-    #             knot = [0, 2.3135629999999998, 4.6271259999999996, 6.9406889999999999, 8.5778230000000004,\
-    #                     10.214957999999999, 11.849695000000001, 13.484432, 15.119168999999999, 16.744737000000001,\
-    #                     18.379473999999998, 20.014211, 21.648949000000002, 23.283685999999999, 24.920819999999999,\
-    #                     26.557953999999999, 28.871517000000001, 31.185079999999999, 33.498643000000001, 35.812206000000003,\
-    #                     38.125770000000003, 40.439332999999998, 42.076467000000001, 43.713600999999997, 45.348337999999998,\
-    #                     46.983074999999999, 48.617812000000001, 50.252549999999999, 51.878118000000001, 53.512855000000002,\
-    #                     55.147592000000003, 56.782328999999997, 58.419463, 60.056598000000001, 62.370161000000003,\
-    #                     64.683723999999998, 66.997287, 69.310850000000002, 71.624413000000004, 73.937976000000006,\
-    #                     75.575109999999995, 77.212243999999998, 78.846981999999997, 80.481718999999998, 82.116455999999999,\
-    #                     83.742024000000001, 85.376761000000002, 87.011498000000003, 88.646235000000004, 90.280972000000006,\
-    #                     91.918107000000006, 93.555240999999995, 95.868803999999997, 98.182366999999999, 100.49593,\
-    #                     102.809493, 105.12305600000001, 107.43661899999999, 109.07375399999999, 110.710888, 112.345625,\
-    #                     113.980362, 115.615099, 117.240667, 118.875404, 120.510142, 122.144879, 123.779616,\
-    #                     125.41674999999999, 127.053884, 129.367447, 131.68100999999999, 133.994574],\
-    #             point = [(0, 2.4341246999999999, 2.6128529999999999),\
-    #                      (0.49114020000000003, 1.9503278999999996, 2.5325198999999996),\
-    #                      (0.98228040000000005, 1.4899844999999996, 2.3634132000000001),\
-    #                      (1.4734209, 1.0692317999999996, 2.1114609000000004),\
-    #                      (0.98228040000000005, 1.0692317999999996, 2.1114609000000004),\
-    #                      (0.49114020000000003, 1.0692317999999996, 2.1114609000000004),\
-    #                      (0.49114020000000003, 0.70281809999999978, 1.7854947000000001),\
-    #                      (0.49114020000000003, 0.40358759999999982, 1.3969409999999998),\
-    #                      (0.49114020000000003, 0.1820294999999999, 0.95941979999999993),\
-    #                      (0.48826769999999997, 0.045909599999999953, 0.49114020000000003),\
-    #                      (0.95941979999999993, 0.18202949999999996, 0.49114020000000008),\
-    #                      (1.3969409999999998, 0.40358759999999988, 0.49114020000000003),\
-    #                      (1.7854946999999999, 0.7028181, 0.49114020000000003),\
-    #                      (2.1114609, 1.0692317999999998, 0.49114020000000014),\
-    #                      (2.1114609, 1.0692318000000001, 0.98228040000000016),\
-    #                      (2.1114609, 1.0692318000000001, 1.4734209),\
-    #                      (2.3634132000000001, 1.4899844999999998, 0.98228040000000005),\
-    #                      (2.5325198999999996, 1.9503279, 0.49114020000000025),\
-    #                      (2.6128529999999999, 2.4341246999999999, 2.4238995509170921e-016),\
-    #                      (2.5325198999999996, 1.9503279, -0.49114019999999975),\
-    #                      (2.3634132000000001, 1.4899845, -0.98228039999999994),\
-    #                      (2.1114609, 1.0692318000000001, -1.4734208999999998),\
-    #                      (2.1114609, 1.0692318000000001, -0.98228039999999983),\
-    #                      (2.1114609, 1.0692318000000001, -0.49114019999999986),\
-    #                      (1.7854946999999999, 0.7028181, -0.49114019999999997),\
-    #                      (1.3969409999999998, 0.40358760000000005, -0.49114019999999997),\
-    #                      (0.95941979999999993, 0.18202950000000004, -0.49114019999999992),\
-    #                      (0.48826769999999997, 0.045909600000000043, -0.49114020000000003),\
-    #                      (0.49114020000000003, 0.18202950000000009, -0.95941979999999993),\
-    #                      (0.49114020000000003, 0.40358760000000016, -1.3969409999999998),\
-    #                      (0.49114020000000003, 0.70281810000000011, -1.7854946999999997),\
-    #                      (0.49114020000000003, 1.0692318000000003, -2.1114608999999995),\
-    #                      (0.98228040000000005, 1.0692318000000003, -2.1114608999999995),\
-    #                      (1.4734209, 1.0692318000000003, -2.1114608999999995),\
-    #                      (0.98228040000000005, 1.4899845000000003, -2.3634131999999997),\
-    #                      (0.49114020000000003, 1.9503279000000002, -2.5325198999999996),\
-    #                      (0, 2.4341246999999999, -2.6128529999999999),\
-    #                      (-0.49114020000000003, 1.9503279000000002, -2.5325198999999996),\
-    #                      (-0.98228040000000005, 1.4899845000000003, -2.3634131999999997),\
-    #                      (-1.4734209, 1.0692318000000003, -2.1114608999999995),\
-    #                      (-0.98228040000000005, 1.0692318000000003, -2.1114608999999995),\
-    #                      (-0.49114020000000003, 1.0692318000000003, -2.1114608999999995),\
-    #                      (-0.49114020000000003, 0.70281810000000011, -1.7854946999999997),\
-    #                      (-0.49114020000000003, 0.40358760000000016, -1.3969409999999998),\
-    #                      (-0.49114020000000003, 0.18202950000000009, -0.95941979999999993),\
-    #                      (-0.48826769999999997, 0.045909600000000043, -0.49114020000000003),\
-    #                      (-0.95941979999999993, 0.18202950000000004, -0.49114019999999992),\
-    #                      (-1.3969409999999998, 0.40358760000000005, -0.49114019999999997),\
-    #                      (-1.7854946999999999, 0.7028181, -0.49114019999999997),\
-    #                      (-2.1114609, 1.0692318000000001, -0.49114019999999986),\
-    #                      (-2.1114609, 1.0692318000000001, -0.98228039999999983),\
-    #                      (-2.1114609, 1.0692318000000001, -1.4734208999999998),\
-    #                      (-2.3634132000000001, 1.4899845, -0.98228039999999994),\
-    #                      (-2.5325198999999996, 1.9503279, -0.49114019999999975),\
-    #                      (-2.6128529999999999, 2.4341246999999999, 2.4238995509170921e-016),\
-    #                      (-2.5325198999999996, 1.9503279, 0.49114020000000025),\
-    #                      (-2.3634132000000001, 1.4899844999999998, 0.98228040000000005),\
-    #                      (-2.1114609, 1.0692318000000001, 1.4734209),\
-    #                      (-2.1114609, 1.0692318000000001, 0.98228040000000016),\
-    #                      (-2.1114609, 1.0692317999999998, 0.49114020000000014),\
-    #                      (-1.7854946999999999, 0.7028181, 0.49114020000000003),\
-    #                      (-1.3969409999999998, 0.40358759999999988, 0.49114020000000003),\
-    #                      (-0.95941979999999993, 0.18202949999999996, 0.49114020000000008),\
-    #                      (-0.49114020000000003, 0.045909599999999953, 0.48826769999999997),\
-    #                      (-0.49114020000000003, 0.1820294999999999, 0.95941979999999993),\
-    #                      (-0.49114020000000003, 0.40358759999999982, 1.3969409999999998),\
-    #                      (-0.49114020000000003, 0.70281809999999978, 1.7854947000000001),\
-    #                      (-0.49114020000000003, 1.0692317999999996, 2.1114609000000004),\
-    #                      (-0.98228040000000005, 1.0692317999999996, 2.1114609000000004),\
-    #                      (-1.4734209, 1.0692317999999996, 2.1114609000000004),\
-    #                      (-0.98228040000000005, 1.4899844999999996, 2.3634132000000001),\
-    #                      (-0.49114020000000003, 1.9503278999999996, 2.5325198999999996),\
-    #                      (0, 2.4341246999999999, 2.6128529999999999)]\
-    #           )
+def shapeOrient():
     orient = cmds.curve( degree = 3,\
                 knot = [0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, \
                         19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, \
@@ -1445,35 +1287,27 @@ def mz_ccButton15(self):
     cmds.setAttr(orient + '.sx', 2)
     cmds.setAttr(orient + '.sy', 2)
     cmds.setAttr(orient + '.sz', 2)
-
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
-
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap15
-def mz_ccButtonSnap15(self):
-    #the selected object(s)
+def snapOrient(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton15(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeOrient()
     else:
-        mz_ccButton15(self)
+        shapeOrient()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
                 
-        
-#mz_ccButton16
-def mz_ccButton16(self):
+def shapeArrowDoubleCurved():
     arrow = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,\
                         21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40],\
@@ -1528,31 +1362,25 @@ def mz_ccButton16(self):
     cmds.setAttr(arrow + '.sz', 0.75)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap16
-def mz_ccButtonSnap16(self):
-    #the selected object(s)
+def snapArrowDoubleCurved(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton16(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeArrowDoubleCurved()
     else:
-        mz_ccButton16(self)
+        shapeArrowDoubleCurved()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
-                
-        
-#mz_ccButton17
-def mz_ccButton17(self):
+            
+def mz_ccButton17():
     cmds.curve( degree = 1,\
                 knot = [0, 4.7999999999999998, 9.5999999999999996, 12.800000000000001, 17.600000000000001,\
                         22.399999999999999, 25.600000000000001, 30.399999999999999, 35.200000000000003,\
@@ -1572,31 +1400,25 @@ def mz_ccButton17(self):
                          (-0.64000000000000012, -2.5600000000000005, 0)]\
               )
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
-           
-#mz_ccButtonSnap17
-def mz_ccButtonSnap17(self):
-    #the selected object(s)
+
+def mz_ccButtonSnap17(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton17(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        mz_ccButton17()
     else:
-        mz_ccButton17(self)
+        mz_ccButton17()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
                 
-        
-#mz_ccButton18
-def mz_ccButton18(self):
+def mz_ccButton18():
     cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],\
                 point = [(-2, 0, -2),\
@@ -1614,31 +1436,25 @@ def mz_ccButton18(self):
                          (-2, 0, -2)]\
               )
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
-           
-#mz_ccButtonSnap18
-def mz_ccButtonSnap18(self):
-    #the selected object(s)
+
+def mz_ccButtonSnap18(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton18(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        mz_ccButton18()
     else:
-        mz_ccButton18(self)
+        mz_ccButton18()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
-                
-        
-#mz_ccButton19
-def mz_ccButton19(self):
+
+def shapeMarker3():
     shape = cmds.curve( degree = 1,\
                 knot = [0, 9.9992300000000007, 13.898834000000001, 17.798387999999999,\
                         21.697965, 25.597534, 35.596760000000003, 45.595986000000003,\
@@ -1694,31 +1510,25 @@ def mz_ccButton19(self):
     cmds.setAttr(shape + '.sz', 0.571)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
-           
-#mz_ccButtonSnap19
-def mz_ccButtonSnap19(self):
-    #the selected object(s)
+
+def snapMarker3(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton19(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeMarker3()
     else:
-        mz_ccButton19(self)
+        shapeMarker3()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
                 
-        
-#mz_ccButton20
-def mz_ccButton20(self):
+def shapeMarker4():
     shape = cmds.curve( degree = 1,\
                 knot = [0, 9.9992300000000007, 13.898834000000001, 17.798387999999999, 21.697965,\
                         25.597534, 35.596760000000003, 45.595986000000003, 49.495555000000003,\
@@ -1773,31 +1583,25 @@ def mz_ccButton20(self):
     cmds.setAttr(shape + '.sz', 0.571)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
-           
-#mz_ccButtonSnap20
-def mz_ccButtonSnap20(self):
-    #the selected object(s)
+
+def snapMarker4(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton20(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeMarker4()
     else:
-        mz_ccButton20(self)
+        shapeMarker4()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
-                
-        
-#mz_ccButton21
-def mz_ccButton21(self):
+
+def shapeMarker5():
     shape = cmds.curve( degree = 1,\
                 knot = [0, 4, 12.944272, 21.888544, 25.888544, 45.888544000000003,\
                 46.932133999999998, 47.975695999999999, 49.019289000000001, 50.062885999999999,\
@@ -1842,31 +1646,25 @@ def mz_ccButton21(self):
     cmds.setAttr(shape + '.sz', 0.5)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap21
-def mz_ccButtonSnap21(self):
-    #the selected object(s)
+def snapMarker5(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton21(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeMarker5()
     else:
-        mz_ccButton21(self)
+        shapeMarker5()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
                 
-        
-#mz_ccButton22
-def mz_ccButton22(self):
+def shapeMarker6():
     shape = cmds.curve( degree = 1,\
                 knot = [0, 4, 12.944272, 21.888544, 25.888544, 45.888544000000003,\
                         46.932133999999998, 47.975695999999999, 49.019289000000001,\
@@ -1912,31 +1710,25 @@ def mz_ccButton22(self):
     cmds.setAttr(shape + '.sz', 0.5)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap22
-def mz_ccButtonSnap22(self):
-    #the selected object(s)
+def snapMarker6(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton22(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeMarker6()
     else:
-        mz_ccButton22(self)
+        shapeMarker6()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
                 
-        
-#mz_ccButton23
-def mz_ccButton23(self):
+def shapeCircleCross():
     circle = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],\
                 point = [(0, 0, -2),\
@@ -1976,26 +1768,19 @@ def mz_ccButton23(self):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap23
-def mz_ccButtonSnap23(self):
-    #the selected object(s)
+def snapCircleCross(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton23(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeCircleCross()
     else:
-        mz_ccButton23(self)
+        shapeCircleCross()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
-        cmds.delete(pConst)
-        
+        cmds.delete(pConst)    
                 
         
-#mz_ccButton24
-def mz_ccButton24(self):
+def shapeMale():
     shape = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,\
                         21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36],\
@@ -2043,31 +1828,25 @@ def mz_ccButton24(self):
     cmds.setAttr(shape + '.sz', 0.8)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap24
-def mz_ccButtonSnap24(self):
-    #the selected object(s)
+def snapMale(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton24(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeMale()
     else:
-        mz_ccButton24(self)
+        shapeMale()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
                 
-        
-#mz_ccButton25
-def mz_ccButton25(self):
+def shapeFemale():
     shape = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,\
                         21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 35.58035297, 36],\
@@ -2114,32 +1893,27 @@ def mz_ccButton25(self):
     cmds.setAttr(shape + '.sx', 0.8)
     cmds.setAttr(shape + '.sy', 0.8)
     cmds.setAttr(shape + '.sz', 0.8)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap25
-def mz_ccButtonSnap25(self):
-    #the selected object(s)
+def snapFemale(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton25(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeFemale()
     else:
-        mz_ccButton25(self)
+        shapeFemale()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
                 
-        
-#mz_ccButton26
-def mz_ccButton26(self):
+def shapeSquareTip():
     cmds.curve( degree = 1,\
                 knot = [0, 4, 8, 12, 16, 24.485281000000001, 32.970562999999999, 36.970562999999999,\
                         45.455843999999999, 53.941125, 57.941125, 66.426406999999998, 74.911687999999998],\
@@ -2158,31 +1932,25 @@ def mz_ccButton26(self):
                          (0.7999999999999996, 3.2000000000000002, 0.80000000000000004)]\
               )
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
-           
-#mz_ccButtonSnap26
-def mz_ccButtonSnap26(self):
-    #the selected object(s)
+
+def snapSquareTip(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton26(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeSquareTip()
     else:
-        mz_ccButton26(self)
+        shapeSquareTip()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
                 
-        
-#mz_ccButton27
-def mz_ccButton27(self):
+def shapeArrowCircle():
     arrow = cmds.curve( degree = 1,\
                 knot = [0, 2, 4.0871430000000002, 6.1743430000000004, 8.2614889999999992, 10.348646,\
                         12.435838, 14.522990999999999, 16.610143000000001, 18.697337999999998,\
@@ -2242,31 +2010,25 @@ def mz_ccButton27(self):
     cmds.setAttr(arrow + '.sz', 0.62)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap27
-def mz_ccButtonSnap27(self):
-    #the selected object(s)
+def snapArrowCircle(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton27(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeArrowCircle()
     else:
-        mz_ccButton27(self)
+        shapeArrowCircle()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
-                
-        
-#mz_ccButton28
-def mz_ccButton28(self):
+
+def shapeGizmo():
     gizmo = cmds.curve( degree = 1,\
                 knot = [0, 1.411065, 6.7736340000000004, 12.136203, 13.547268000000001, 18.909838000000001,\
                         24.272407000000001, 25.683471000000001, 31.046040999999999, 36.408610000000003,\
@@ -2351,31 +2113,25 @@ def mz_ccButton28(self):
     cmds.setAttr(gizmo + '.sz', 0.48)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap28
-def mz_ccButtonSnap28(self):
-    #the selected object(s)
+def snapGizmo(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton28(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeGizmo()
     else:
-        mz_ccButton28(self)
+        shapeGizmo()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
-                
-        
-#mz_ccButton29
-def mz_ccButton29(self):
+
+def shapeCurvedArrowhead():
     arrow = cmds.curve( degree = 1,\
                 knot = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],\
                 point = [(-2.0857863095420344, -9.3632573363181929e-025, 5.0971193932269898e-009),\
@@ -2399,31 +2155,25 @@ def mz_ccButton29(self):
     cmds.setAttr(arrow + '.sz', 0.7)
     cmds.move(0, 0, 0, arrow + ".scalePivot", arrow + ".rotatePivot", absolute=True)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap29
-def mz_ccButtonSnap29(self):
-    #the selected object(s)
+def snapCurvedArrowhead(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton29(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeCurvedArrowhead()
     else:
-        mz_ccButton29(self)
+        shapeCurvedArrowhead()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
                 
-        
-#mz_ccButton30
-def mz_ccButton30(self):
+def shapeAirplane():
     arrow = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],\
                 point = [(-2.0857863095420344, -9.3632573363181929e-025, 5.0971193932269898e-009),\
@@ -2453,31 +2203,25 @@ def mz_ccButton30(self):
     cmds.move(0, 0, 0, arrow + ".scalePivot", arrow + ".rotatePivot", absolute=True)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap30
-def mz_ccButtonSnap30(self):
-    #the selected object(s)
+def snapAirplane(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton30(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeAirplane()
     else:
-        mz_ccButton30(self)
+        shapeAirplane()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
                 
-        
-#mz_ccButton31
-def mz_ccButton31(self):
+def shapeSquiggleCircle():
     shape = cmds.curve( degree = 3,\
                 knot = [-0.0625, -0.03125, 0, 0.03125, 0.0625, 0.09375, 0.125, 0.15625, 0.1875,\
                         0.21875, 0.25, 0.28125, 0.3125, 0.34374999999999994, 0.375, 0.40625,\
@@ -2525,31 +2269,25 @@ def mz_ccButton31(self):
     cmds.setAttr(shape + '.sz', 0.83)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
+    
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap31
-def mz_ccButtonSnap31(self):
-    #the selected object(s)
+def snapSquiggleCircle(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton31(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeSquiggleCircle()
     else:
-        mz_ccButton31(self)
+        shapeSquiggleCircle()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
                 
-        
-#mz_ccButton32
-def mz_ccButton32(self):
+def shapeSunDial():
     shape = cmds.curve( degree = 1,\
                 knot = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,\
                         26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,\
@@ -2637,32 +2375,25 @@ def mz_ccButton32(self):
     cmds.setAttr(shape + '.sz', 0.62)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap32
-def mz_ccButtonSnap32(self):
-    #the selected object(s)
+def snapSunDial(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton32(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeSunDial()
     else:
-        mz_ccButton32(self)
+        shapeSunDial()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
                 
-        
-#mz_ccButton33
-def mz_ccButton33(self):
-    #lowerLip ctrl
+def shapeLips():
     lowerLipCtrl = cmds.curve( degree = 3,\
                                 knot = [-0.0625, -0.03125, 0, 0.03125, 0.0625, 0.09375, 0.125, 0.15625, 0.1875,\
                                         0.21875, 0.25, 0.28125, 0.3125, 0.34374999999999994, 0.375, 0.40625, 0.4375,\
@@ -2706,7 +2437,6 @@ def mz_ccButton33(self):
                                          (6.7338187338943015e-018, 0.078481848612419761, -2.8181393974009046)]\
                               )
     setColour()
-    #upperLip ctrl
     upperLipCtrl = cmds.curve( degree = 3,\
                                 knot = [-0.0625, -0.03125, 0, 0.03125, 0.0625, 0.09375, 0.125, 0.15625, 0.1875,\
                                         0.21875, 0.25, 0.28125, 0.3125, 0.34374999999999994, 0.375, 0.40625,\
@@ -2750,6 +2480,7 @@ def mz_ccButton33(self):
                                          (-3.4890127183460769e-016, 0.077984024529113016, 2.8181393974009046)]\
                               )
     setColour()
+
     #put the upperLip ctrl underneath lowerLip ctrl
     cmds.parent(upperLipCtrl, lowerLipCtrl)
     cmds.select(lowerLipCtrl, replace = 1)
@@ -2758,31 +2489,25 @@ def mz_ccButton33(self):
     cmds.setAttr(lowerLipCtrl + '.sy', 0.64)
     cmds.setAttr(lowerLipCtrl + '.sz', 0.64)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
-           
-#mz_ccButtonSnap33
-def mz_ccButtonSnap33(self):
-    #the selected object(s)
+
+def snapLips(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton33(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeLips()
     else:
-        mz_ccButton33(self)
+        shapeLips()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
                         
-
-#mz_ccButton34
-def mz_ccButton34(self):
+def shapeBoomerang():
     shape = cmds.curve( degree = 3,\
                 knot = [-0.125, -0.0625, 0, 0.0625, 0.125, 0.1875, 0.25, 0.3125, 0.375, 0.4375, 0.5, 0.5625,\
                         0.625, 0.68749999999999989, 0.75, 0.8125, 0.875, 0.9375, 1, 1.0625, 1.125],\
@@ -2814,31 +2539,25 @@ def mz_ccButton34(self):
     cmds.move(0, 0, 0, shape + ".scalePivot", shape + ".rotatePivot", absolute=True)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
-           
-#mz_ccButtonSnap34
-def mz_ccButtonSnap34(self):
-    #the selected object(s)
+
+def snapBoomerang(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton34(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeBoomerang()
     else:
-        mz_ccButton34(self)
+        shapeBoomerang()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
                 
-        
-#mz_ccButton35
-def mz_ccButton35(self):
+def shapeArrowDown():
     arrow = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7],\
                 point = [(0, 0, 0),\
@@ -2856,32 +2575,25 @@ def mz_ccButton35(self):
     cmds.setAttr(arrow + '.sz', 0.6)
     cmds.makeIdentity(apply = 1, translate = False, rotate = True, scale = True, normal = 0)
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap35
-def mz_ccButtonSnap35(self):
-    #the selected object(s)
+def snapArrowDown(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton35(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeArrowDown()
     else:
-        mz_ccButton35(self)
+        shapeArrowDown()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
-                
-        
-#mz_ccButton36
-def mz_ccButton36(self):
-    #eyes ctrl
+
+def shapeEyes():
     eyesCtrl = cmds.curve( degree = 3,\
                             knot = [-0.125, -0.0625, 0, 0.0625, 0.125, 0.1875, 0.25, 0.3125, 0.375, 0.4375,\
                                     0.5, 0.5625, 0.625, 0.68749999999999989, 0.75, 0.8125, 0.875, 0.9375, 1, 1.0625, 1.125],\
@@ -2906,7 +2618,6 @@ def mz_ccButton36(self):
                                      (-1.0632000275130833e-016, 1.4704200208281888, -3.5957931707434332)]\
                           )
     setColour()
-    #left eyes ctrl
     leftEyeCtrl = cmds.curve( degree = 3,\
                             knot = [-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],\
                             point = [(3.1077074990292601e-016, -1.0970562748477151, -3.0970562748477133),\
@@ -2922,9 +2633,6 @@ def mz_ccButton36(self):
                                      (-1.764201043552486e-016, 1.097056274847714, -3.0970562748477137)]\
                           )
     setColour()
-    #cmds.move(0, 0, -2, leftEyeCtrl + ".scalePivot")
-    #cmds.move(0, 0, -2, leftEyeCtrl + ".rotatePivot")
-    #right eyes ctrl
     rightEyeCtrl = cmds.curve( degree = 3,\
                             knot = [-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],\
                             point = [(3.1077074990292601e-016, -1.0970562748477151, 0.90294372515228671),\
@@ -2940,8 +2648,7 @@ def mz_ccButton36(self):
                                      (-1.764201043552486e-016, 1.097056274847714, 0.90294372515228605)]\
                           )
     setColour()
-    #cmds.move(0, 0, 2, rightEyeCtrl + ".scalePivot")
-    #cmds.move(0, 0, 2, rightEyeCtrl + ".rotatePivot")
+    
     #parent right and left eye ctrl underneath eyes ctrl
     cmds.parent(leftEyeCtrl, eyesCtrl)
     cmds.parent(rightEyeCtrl, eyesCtrl)
@@ -2951,31 +2658,25 @@ def mz_ccButton36(self):
     cmds.setAttr(eyesCtrl + '.sy', 0.65)
     cmds.setAttr(eyesCtrl + '.sz', 0.65)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap36
-def mz_ccButtonSnap36(self):
-    #the selected object(s)
+def snapEyes(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton36(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeEyes()
     else:
-        mz_ccButton36(self)
+        shapeEyes()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
                 
-        
-#mz_ccButton37
-def mz_ccButton37(self):
+def shapeEar():
     shape = cmds.curve( degree = 3,\
                 knot = [0, 0, 0, 0.027777777777777773, 0.055555555555555546, 0.083333333333333329,\
                         0.11111111111111109, 0.1388888888888889, 0.16666666666666666, 0.19444444444444445,\
@@ -3031,31 +2732,25 @@ def mz_ccButton37(self):
     cmds.setAttr(shape + '.sz', 0.5)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap37
-def mz_ccButtonSnap37(self):
-    #the selected object(s)
+def snapEar(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton37(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeEar()
     else:
-        mz_ccButton37(self)
+        shapeEar()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
                 
-        
-#mz_ccButton38
-def mz_ccButton38(self):
+def shapeArrowQuad2():
     arrow = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,\
                         21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,\
@@ -3115,31 +2810,25 @@ def mz_ccButton38(self):
     cmds.setAttr(arrow + '.sz', 0.785)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap38
-def mz_ccButtonSnap38(self):
-    #the selected object(s)
+def snapArrowQuad2(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton38(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeArrowQuad2()
     else:
-        mz_ccButton38(self)
+        shapeArrowQuad2()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
-                
-        
-#mz_ccButton39
-def mz_ccButton39(self):
+
+def shapeFlower():
     shape = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],\
                 point = [(5.8520521406535408e-007, 0, -1.0398099422454834),\
@@ -3164,31 +2853,25 @@ def mz_ccButton39(self):
     cmds.setAttr(shape + '.sz', 0.61)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap39
-def mz_ccButtonSnap39(self):
-    #the selected object(s)
+def snapFlower(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton39(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeFlower()
     else:
-        mz_ccButton39(self)
+        shapeFlower()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
-                
-        
-#mz_ccButton40
-def mz_ccButton40(self):
+
+def shapeMarker2():
     shape = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,\
                         16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],\
@@ -3229,31 +2912,25 @@ def mz_ccButton40(self):
     cmds.setAttr(shape + '.sz', 0.5)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
-           
-#mz_ccButtonSnap40
-def mz_ccButtonSnap40(self):
-    #the selected object(s)
+
+def snapMarker2(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton40(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeMarker2()
     else:
-        mz_ccButton40(self)
+        shapeMarker2()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
-                
-        
-#mz_ccButton41
-def mz_ccButton41(self):
+
+def shapeLaptop():
     shape = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8],\
                 point = [(2, 0, 0),\
@@ -3271,31 +2948,25 @@ def mz_ccButton41(self):
     cmds.setAttr(shape + '.sz', 0.66)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
-           
-#mz_ccButtonSnap41
-def mz_ccButtonSnap41(self):
-    #the selected object(s)
+
+def snapLaptop(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton41(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeLaptop()
     else:
-        mz_ccButton41(self)
+        shapeLaptop()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
-                
-        
-#mz_ccButton42
-def mz_ccButton42(self):
+
+def shapeCylinder():
     shape = cmds.curve( degree = 1,\
                 knot = [0, 1.565366, 3.1307580000000002, 4.6961259999999996, 6.2614869999999998,\
                         7.8268849999999999, 9.3922439999999998, 15.392244, 16.957602000000001, 18.523,\
@@ -3372,31 +3043,25 @@ def mz_ccButton42(self):
     cmds.setAttr(shape + '.sz', 0.68)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
-           
-#mz_ccButtonSnap42
-def mz_ccButtonSnap42(self):
-    #the selected object(s)
+
+def snapCylinder(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton42(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeCylinder()
     else:
-        mz_ccButton42(self)
+        shapeCylinder()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
                 
-        
-#mz_ccButton43
-def mz_ccButton43(self):
+def shapeMarker():
     shape = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6],\
                 point = [(0, 0, 0),\
@@ -3412,31 +3077,25 @@ def mz_ccButton43(self):
     cmds.setAttr(shape + '.sz', 0.5)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap43
-def mz_ccButtonSnap43(self):
-    #the selected object(s)
+def snapMarker(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton43(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeMarker()
     else:
-        mz_ccButton43(self)
+        shapeMarker()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
-                
-        
-#mz_ccButton44
-def mz_ccButton44(self):
+
+def shapeTongue():
     shape = cmds.curve( degree = 3,\
                 knot = [0, 0, 0, 0.50358628617148704, 1.4337586472378248, 2.4062686187308571,\
                         3.2255926458086837, 4.3739460616280263, 5.1168801677211926, 5.8776710459855988,\
@@ -3491,32 +3150,25 @@ def mz_ccButton44(self):
     cmds.setAttr(shape + '.sz', 0.43)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap44
-def mz_ccButtonSnap44(self):
-    #the selected object(s)
+def snapTongue(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton44(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeTongue()
     else:
-        mz_ccButton44(self)
+        shapeTongue()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
                 
-        
-#mz_ccButton45
-def mz_ccButton45(self):
-    #paw ctrl
+def shapePaw():
     pawCtrl = cmds.curve( degree = 2,\
                             knot = [0, 0, 0.03125, 0.0625, 0.09375, 0.125, 0.15625, 0.1875, 0.21875, 0.25, 0.28125,\
                                     0.3125, 0.34375, 0.375, 0.40625, 0.4375, 0.46875, 0.5, 0.53125, 0.5625, 0.59375,\
@@ -3558,7 +3210,6 @@ def mz_ccButton45(self):
                                      (1.3410994874315185, -2.0800197971551282, 0)]\
                           )
     setColour()
-    #finger ctrl1
     fingerCtrl1 = cmds.curve( degree = 1,\
                                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],\
                                 point = [(-3.6946897904112177, 0.64218970589797353, 0),\
@@ -3581,8 +3232,6 @@ def mz_ccButton45(self):
                                          (-3.6946897904112177, 0.64218970589797353, 0)]\
                               )
     setColour()
-
-    #finger ctrl2
     fingerCtrl2 = cmds.curve( degree = 1,\
                                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],\
                                 point = [(-1.2696684120546053, 2.3094990856093935, 7.5738152707983916e-021),\
@@ -3605,7 +3254,6 @@ def mz_ccButton45(self):
                                          (-1.2696684120546053, 2.3094990856093935, 7.5738152707983916e-021)]\
                               )
     setColour()
-    #finger ctrl3
     fingerCtrl3 = cmds.curve( degree = 1,\
                                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],\
                                 point = [(1.2696684120546067, 2.3094990856093927, 4.5247657638222111e-016),\
@@ -3628,7 +3276,6 @@ def mz_ccButton45(self):
                                          (1.2696684120546067, 2.3094990856093927, 4.5247657638222111e-016)]\
                               )
     setColour()
-    #finger ctrl4
     fingerCtrl4 = cmds.curve( degree = 1,\
                                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],\
                                 point = [(3.6946897904112177, 0.64218970589797353, 4.5246900256695025e-016),\
@@ -3651,6 +3298,7 @@ def mz_ccButton45(self):
                                          (3.6946897904112177, 0.64218970589797353, 4.5246900256695025e-016)]\
                               )
     setColour()
+
     #parent the fingers underneath the paw ctrl
     cmds.parent(fingerCtrl1, pawCtrl)
     cmds.parent(fingerCtrl2, pawCtrl)
@@ -3662,28 +3310,24 @@ def mz_ccButton45(self):
     cmds.setAttr(pawCtrl + '.sy', 0.52)
     cmds.setAttr(pawCtrl + '.sz', 0.52)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
+
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-#mz_ccButtonSnap45
-def mz_ccButtonSnap45(self):
-    #the selected object(s)
+def snapPaw(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        mz_ccButton45(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapePaw()
     else:
-        mz_ccButton45(self)
+        shapePaw()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
-def shapeSquare(self):
+def shapeSquare():
     square = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4],\
                 point = [(1, 0, -1), (-1, 0, -1), (-1, 0, 1), (1, 0, 1), (1, 0, -1)]
@@ -3692,7 +3336,6 @@ def shapeSquare(self):
     cmds.setAttr(square + '.sy', 2)
     cmds.setAttr(square + '.sz', 2)
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
-    #cmds.move(0, 0, 0, triangle + ".scalePivot", triangle + ".rotatePivot", absolute=True)
     setColour()
 
     #make group(s)
@@ -3700,22 +3343,18 @@ def shapeSquare(self):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-def snapSquare(self):
-    #the selected object(s)
+def snapSquare(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        shapeSquare(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeSquare()
     else:
-        shapeSquare(self)
+        shapeSquare()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
         
-def shapeTriangle(self):
+def shapeTriangle():
     triangle = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3],\
                 point = [(-1, 0, 0.6),(1, 0, 0.6),(0, 0, -1.3),(-1, 0, 0.6)]
@@ -3726,7 +3365,6 @@ def shapeTriangle(self):
     cmds.setAttr(triangle + '.sx', 1.5)
     cmds.setAttr(triangle + '.sy', 1.5)
     cmds.setAttr(triangle + '.sz', 1.5)
-
     cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     cmds.move(0, 0, 0, triangle + ".scalePivot", triangle + ".rotatePivot", absolute=True)
     setColour()
@@ -3736,23 +3374,19 @@ def shapeTriangle(self):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-def snapTriangle(self):
-    #the selected object(s)
+def snapTriangle(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        shapeTriangle(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeTriangle()
     else:
-        shapeTriangle(self)
+        shapeTriangle()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
 
 
-def shapePyramid(self):
+def shapePyramid():
     shape = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],\
                 point = [(0, 2, 0), (1, 0, -1), (-1, 0, -1), (0, 2, 0), (-1, 0, 1), (1, 0, 1), (0, 2, 0), (1, 0, -1), (1, 0, 1), (-1, 0, 1), (-1, 0, -1)]
@@ -3769,23 +3403,19 @@ def shapePyramid(self):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-def snapPyramid(self):
-    #the selected object(s)
+def snapPyramid(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        shapePyramid(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapePyramid()
     else:
-        shapePyramid(self)
+        shapePyramid()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
 
 
-def shapeCone(self):
+def shapeCone():
     shape = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],\
                 point = [(0.5, -1, 0.866025), (-0.5, -1, 0.866025), (0, 1, 0), (0.5, -1, 0.866025), (1, -1, 0), (0, 1, 0), (0.5, -1, -0.866025), (1, -1, 0), (0, 1, 0),\
@@ -3804,23 +3434,19 @@ def shapeCone(self):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-def snapCone(self):
-    #the selected object(s)
+def snapCone(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        shapeCone(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeCone()
     else:
-        shapeCone(self)
+        shapeCone()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
 
 
-def shapeRombus(self):
+def shapeRombus():
     shape = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],\
                 point = [(0,1,0), (1,0,0), (0,0,1), (-1,0,0), (0,0,-1), (0,1,0), (0,0,1), (0,-1,0), (0,0,-1), (1,0,0), (0,1,0), (-1,0,0), (0,-1,0), (1,0,0)]
@@ -3837,23 +3463,19 @@ def shapeRombus(self):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-def snapRombus(self):
-    #the selected object(s)
+def snapRombus(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        shapeRombus(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeRombus()
     else:
-        shapeRombus(self)
+        shapeRombus()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
 
 
-def shapeArrow90(self):
+def shapeArrow90():
     shape = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],\
                 point = [(-0.251045,0,1.015808), (-0.761834,0,0.979696), (-0.486547,0,0.930468), (-0.570736,0,0.886448), (-0.72786,0,0.774834), (-0.909301,0,0.550655),\
@@ -3874,23 +3496,19 @@ def shapeArrow90(self):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-def snapArrow90(self):
-    #the selected object(s)
+def snapArrow90(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        shapeArrow90(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeArrow90()
     else:
-        shapeArrow90(self)
+        shapeArrow90()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
 
 
-def shapeArrow180(self):
+def shapeArrow180():
     shape = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28],\
                 point = [(-0.251045,0,-1.015808), (-0.761834,0,-0.979696), (-0.486547,0,-0.930468), (-0.570736,0,-0.886448), (-0.72786,0,-0.774834),\
@@ -3913,23 +3531,19 @@ def shapeArrow180(self):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-def snapArrow180(self):
-    #the selected object(s)
+def snapArrow180(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        shapeArrow180(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeArrow180()
     else:
-        shapeArrow180(self)
+        shapeArrow180()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
 
 
-def shapeCross(self):
+def shapeCross():
     shape = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],\
                 point = [(0.4,0,-0.4), (0.4,0,-2), (-0.4,0,-2), (-0.4,0,-0.4), (-2,0,-0.4), (-2,0,0.4), (-0.4,0,0.4), (-0.4,0,2), (0.4,0,2), (0.4,0,0.4), (2,0,0.4), (2,0,-0.4), (0.4,0,-0.4)]
@@ -3941,23 +3555,19 @@ def shapeCross(self):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-def snapCross(self):
-    #the selected object(s)
+def snapCross(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        shapeCross(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeCross()
     else:
-        shapeCross(self)
+        shapeCross()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
 
 
-def shapeArrowQuad(self):
+def shapeArrowQuad():
     shape = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],\
                 point = [(0,0,-1.98), (-0.495,0,-1.32), (-0.165,0,-1.32), (-0.165,0,-0.165), (-1.32,0,-0.165), (-1.32,0,-0.495),\
@@ -3972,23 +3582,19 @@ def shapeArrowQuad(self):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-def snapArrowQuad(self):
-    #the selected object(s)
+def snapArrowQuad(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        shapeArrowQuad(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeArrowQuad()
     else:
-        shapeArrowQuad(self)
+        shapeArrowQuad()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
 
 
-def shapeArrowOcto(self):
+def shapeArrowOcto():
     shape = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,\
                         25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48],\
@@ -4009,23 +3615,19 @@ def shapeArrowOcto(self):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-def snapArrowOcto(self):
-    #the selected object(s)
+def snapArrowOcto(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        shapeArrowOcto(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeArrowOcto()
     else:
-        shapeArrowOcto(self)
+        shapeArrowOcto()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
 
 
-def shapeCog(self):
+def shapeCog():
     circle = cmds.circle(nr=(0,1,0), c=(0,0,0), sw=360, r=1, d=3, ut=0, tol=0.01, s=16, ch=1)[0]
     cmds.select(circle + '.cv[0]', circle + '.cv[2]', circle + '.cv[4]', circle + '.cv[6]', circle + '.cv[8]', circle + '.cv[10]', circle + '.cv[12]', circle + '.cv[14]', replace=True)
     cmds.scale(2.67, 2.67, 2.67, pivot=(0,0,0), relative=True)
@@ -4037,23 +3639,19 @@ def shapeCog(self):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-def snapCog(self):
-    #the selected object(s)
+def snapCog(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        shapeCog(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeCog()
     else:
-        shapeCog(self)
+        shapeCog()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
 
 
-def shapeSpiral(self):
+def shapeSpiral():
     shape = cmds.curve(degree = 3,\
                 knot = [0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 13, 13],\
                 point = [(0.474561,0,-1.241626), (0.171579,0,-1.214307), (-0.434384,0,-1.159672), (-1.124061,0,-0.419971),\
@@ -4072,23 +3670,19 @@ def shapeSpiral(self):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-def snapSpiral(self):
-    #the selected object(s)
+def snapSpiral(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        shapeSpiral(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeSpiral()
     else:
-        shapeSpiral(self)
+        shapeSpiral()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
 
 
-def shapeBulb(self):
+def shapeBulb():
     shape = cmds.curve(degree = 3,\
                 knot = [0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,\
                         32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 59, 59],\
@@ -4112,17 +3706,13 @@ def shapeBulb(self):
         cmds.group()
         cmds.xform(pivots = (0, 0, 0))
            
-def snapBulb(self):
-    #the selected object(s)
+def snapBulb(*args):
     selObj = cmds.ls(selection = 1)
     
-    #if no object is selected, create the ctrl at the center of the scene
     if len(selObj) == 0:
-        shapeBulb(self)
-            
-    #else, put the ctrl at the centre of the object(s)       
+        shapeBulb()
     else:
-        shapeBulb(self)
+        shapeBulb()
         selCtrl = cmds.ls(selection = 1)
         pConst = cmds.parentConstraint(selObj, selCtrl[0])
         cmds.delete(pConst)
