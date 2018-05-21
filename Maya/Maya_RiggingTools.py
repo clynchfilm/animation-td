@@ -14,6 +14,7 @@
 
 
 import maya.cmds as cmds
+import maya.mel as mel
 
 
 
@@ -64,32 +65,32 @@ def createGUI():
     cmds.gridLayout(numberOfColumns = 8, cellWidthHeight = (40, 40), width = 100)
     
     #icons of the "controllers"
-    cmds.symbolButton(image='rigging_icons/locator.png',     command=mz_ccButtonSnap09)
-    cmds.symbolButton(image='rigging_icons/circle.png',      command=snapCircle)
-    cmds.symbolButton(image='rigging_icons/circleCross.png', command=mz_ccButtonSnap23)
-    cmds.symbolButton(image='rigging_icons/dome.png',        command=mz_ccButtonSnap14)
-    cmds.symbolButton(image='rigging_icons/sphere.png',      command=mz_ccButtonSnap10)
-    cmds.symbolButton(image='rigging_icons/square.png',      command=snapSquare)
-    cmds.symbolButton(image='rigging_icons/cube.png',        command=snapCube)
-    cmds.symbolButton(image='rigging_icons/triangle.png',    command=snapTriangle)
+    cmds.symbolButton(image='rigging_icons/locator.png',           command=mz_ccButtonSnap09)
+    cmds.symbolButton(image='rigging_icons/circle.png',            command=snapCircle)
+    cmds.symbolButton(image='rigging_icons/circleCross.png',       command=mz_ccButtonSnap23)
+    cmds.symbolButton(image='rigging_icons/dome.png',              command=mz_ccButtonSnap14)
+    cmds.symbolButton(image='rigging_icons/sphere.png',            command=mz_ccButtonSnap10)
+    cmds.symbolButton(image='rigging_icons/square.png',            command=snapSquare)
+    cmds.symbolButton(image='rigging_icons/cube.png',              command=snapCube)
+    cmds.symbolButton(image='rigging_icons/triangle.png',          command=snapTriangle)
 
-    cmds.button(label="Pyramid", enable=False)
-    cmds.button(label="Cone", enable=False)
-    cmds.symbolButton(image='rigging_icons/spearTip.png',    command=snapSpearTip)
-    cmds.symbolButton(image='rigging_icons/squareTip.png',   command=mz_ccButtonSnap26)
-    cmds.button(label="Rombus", enable=False)
-    cmds.symbolButton(image='rigging_icons/arrowDown.png',   command=mz_ccButtonSnap35)
-    cmds.symbolButton(image='rigging_icons/arrowDouble.png', command=snapArrowDouble)
-    cmds.button(label="90 arrow", enable=False)
+    cmds.symbolButton(image='rigging_icons/pyramid.png',           command=snapPyramid)
+    cmds.symbolButton(image='rigging_icons/cone.png',              command=snapCone)
+    cmds.symbolButton(image='rigging_icons/spearTip.png',          command=snapSpearTip)
+    cmds.symbolButton(image='rigging_icons/squareTip.png',         command=mz_ccButtonSnap26)
+    cmds.symbolButton(image='rigging_icons/rombus.png',            command=snapRombus)
+    cmds.symbolButton(image='rigging_icons/arrowDown.png',         command=mz_ccButtonSnap35)
+    cmds.symbolButton(image='rigging_icons/arrowDouble.png',       command=snapArrowDouble)
+    cmds.symbolButton(image='rigging_icons/arrow90.png',           command=snapArrow90)
     
-    cmds.button(label="180 arrow", enable=False)
-    cmds.symbolButton(image='rigging_icons/arrowCircle.png',     command=mz_ccButtonSnap27)
-    cmds.symbolButton(image='rigging_icons/arrowCircleThin.png', command=snapRotateArrow)
-    cmds.symbolButton(image='rigging_icons/arrow180Thin.png',    command=snapArrowDoubleThin)
-    cmds.symbolButton(image='rigging_icons/arrowDoubleThin.png', command=mz_ccButtonSnap07)
-    cmds.button(label="Cross", enable=False)
-    cmds.button(label="Quad arrow", enable=False)
-    cmds.button(label="Octo arrow", enable=False)
+    cmds.symbolButton(image='rigging_icons/arrow180.png',          command=snapArrow180)
+    cmds.symbolButton(image='rigging_icons/arrowCircle.png',       command=mz_ccButtonSnap27)
+    cmds.symbolButton(image='rigging_icons/arrowCircleThin.png',   command=snapRotateArrow)
+    cmds.symbolButton(image='rigging_icons/arrow180Thin.png',      command=snapArrowDoubleThin)
+    cmds.symbolButton(image='rigging_icons/arrowDoubleThin.png',   command=mz_ccButtonSnap07)
+    cmds.symbolButton(image='rigging_icons/cross.png',             command=snapCross)
+    cmds.symbolButton(image='rigging_icons/arrowQuad.png',         command=snapArrowQuad)
+    cmds.symbolButton(image='rigging_icons/arrowOcto.png',         command=snapArrowOcto)
     
     cmds.symbolButton(image='rigging_icons/arrowQuad2.png',        command=mz_ccButtonSnap38)
     cmds.symbolButton(image='rigging_icons/arrowDoubleCurved.png', command=mz_ccButtonSnap16)
@@ -100,21 +101,21 @@ def createGUI():
     cmds.symbolButton(image='rigging_icons/airplane.png',          command=mz_ccButtonSnap30)
     cmds.symbolButton(image='rigging_icons/squiggleCircle.png',    command=mz_ccButtonSnap31)
     
-    cmds.symbolButton(image='rigging_icons/sunDial.png',   command=mz_ccButtonSnap32)
-    cmds.symbolButton(image='rigging_icons/boomerang.png', command=mz_ccButtonSnap34)
-    cmds.symbolButton(image='rigging_icons/flower.png',    command=mz_ccButtonSnap39)
-    cmds.button(label="Cog", enable=False)
-    cmds.button(label="Spiral", enable=False)
-    cmds.symbolButton(image='rigging_icons/laptop.png',    command=mz_ccButtonSnap41)
-    cmds.symbolButton(image='rigging_icons/cylinder.png',  command=mz_ccButtonSnap42)
-    cmds.symbolButton(image='rigging_icons/marker.png',    command=mz_ccButtonSnap43)
+    cmds.symbolButton(image='rigging_icons/sunDial.png',           command=mz_ccButtonSnap32)
+    cmds.symbolButton(image='rigging_icons/boomerang.png',         command=mz_ccButtonSnap34)
+    cmds.symbolButton(image='rigging_icons/flower.png',            command=mz_ccButtonSnap39)
+    cmds.symbolButton(image='rigging_icons/cog.png',               command=snapCog)
+    cmds.symbolButton(image='rigging_icons/spiral.png',            command=snapSpiral)
+    cmds.symbolButton(image='rigging_icons/laptop.png',            command=mz_ccButtonSnap41)
+    cmds.symbolButton(image='rigging_icons/cylinder.png',          command=mz_ccButtonSnap42)
+    cmds.symbolButton(image='rigging_icons/marker.png',            command=mz_ccButtonSnap43)
     
-    cmds.symbolButton(image='rigging_icons/marker2.png', command=mz_ccButtonSnap40)
-    cmds.symbolButton(image='rigging_icons/marker3.png', command=mz_ccButtonSnap19)
-    cmds.symbolButton(image='rigging_icons/marker4.png', command=mz_ccButtonSnap20)
-    cmds.symbolButton(image='rigging_icons/marker5.png', command=mz_ccButtonSnap21)
-    cmds.symbolButton(image='rigging_icons/marker6.png', command=mz_ccButtonSnap22)
-    cmds.button(label="Bulb", enable=False)
+    cmds.symbolButton(image='rigging_icons/marker2.png',           command=mz_ccButtonSnap40)
+    cmds.symbolButton(image='rigging_icons/marker3.png',           command=mz_ccButtonSnap19)
+    cmds.symbolButton(image='rigging_icons/marker4.png',           command=mz_ccButtonSnap20)
+    cmds.symbolButton(image='rigging_icons/marker5.png',           command=mz_ccButtonSnap21)
+    cmds.symbolButton(image='rigging_icons/marker6.png',           command=mz_ccButtonSnap22)
+    cmds.symbolButton(image='rigging_icons/bulb.png',              command=snapBulb)
     
     cmds.setParent(controllersLayout)
     cmds.frameLayout(label = 'Character specific', collapsable=True, collapse=False, height=107)
@@ -673,7 +674,7 @@ def mz_ccButtonSnap07(self):
         
 #mz_ccButton08
 def mz_ccButton08(self):
-    cmds.curve( degree = 1,\
+    basket = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,\
                         24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45,\
                         46, 47, 48, 49, 50, 51, 52, 53, 54, 55],\
@@ -734,6 +735,14 @@ def mz_ccButton08(self):
                          (-0.932697, 1.2471760000000001, 0.35686000000000001),\
                          (-0.93448699999999996, 1.2758370000000001, 2.0165799999999999e-008)]\
               )
+    cmds.setAttr(basket + '.ry', 90)
+    cmds.setAttr(basket + '.ty', -0.27)
+    cmds.move(0, 0, 0, basket + ".scalePivot", basket + ".rotatePivot", absolute=True)
+    cmds.setAttr(basket + '.sx', 0.9)
+    cmds.setAttr(basket + '.sy', 0.9)
+    cmds.setAttr(basket + '.sz', 0.9)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
+
     setColour()
     #make group(s)
     for i in xrange(numGroups()):
@@ -1004,6 +1013,10 @@ def mz_ccButton11(self):
     cmds.parent(indexCtrl, handCtrl)
     cmds.parent(thumbCtrl, handCtrl)
     cmds.select(handCtrl, replace = 1)
+    cmds.setAttr(handCtrl + '.sx', 0.5)
+    cmds.setAttr(handCtrl + '.sy', 0.5)
+    cmds.setAttr(handCtrl + '.sz', 0.5)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
@@ -1461,7 +1474,7 @@ def mz_ccButtonSnap15(self):
         
 #mz_ccButton16
 def mz_ccButton16(self):
-    cmds.curve( degree = 1,\
+    arrow = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,\
                         21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40],\
                 point = [(0, 2.4341247000000004, 2.6128529999999994),\
@@ -1506,6 +1519,14 @@ def mz_ccButton16(self):
                          (-0.49114020000000003, 1.9503279000000007, 2.5325198999999992),\
                          (0, 2.4341247000000004, 2.6128529999999994)]\
               )
+    cmds.setAttr(arrow + '.ry', 90)
+    cmds.setAttr(arrow + '.rz', 180)
+    cmds.setAttr(arrow + '.ty', 2.35)
+    cmds.move(0, 0, 0, arrow + ".scalePivot", arrow + ".rotatePivot", absolute=True)
+    cmds.setAttr(arrow + '.sx', 0.4)
+    cmds.setAttr(arrow + '.sy', 0.5)
+    cmds.setAttr(arrow + '.sz', 0.75)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
     #make group(s)
     for i in xrange(numGroups()):
@@ -1618,7 +1639,7 @@ def mz_ccButtonSnap18(self):
         
 #mz_ccButton19
 def mz_ccButton19(self):
-    cmds.curve( degree = 1,\
+    shape = cmds.curve( degree = 1,\
                 knot = [0, 9.9992300000000007, 13.898834000000001, 17.798387999999999,\
                         21.697965, 25.597534, 35.596760000000003, 45.595986000000003,\
                         49.495555000000003, 53.395130999999999, 57.294685999999999,\
@@ -1668,6 +1689,10 @@ def mz_ccButton19(self):
                          (0.80000000000000038, 1.5999999999999917, 5.854783632927615e-017),\
                          (2.9840220143980878e-016, 1.5999999999999917, 5.854783632927615e-017)]\
               )
+    cmds.setAttr(shape + '.sx', 0.571)
+    cmds.setAttr(shape + '.sy', 0.571)
+    cmds.setAttr(shape + '.sz', 0.571)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
     #make group(s)
     for i in xrange(numGroups()):
@@ -1694,7 +1719,7 @@ def mz_ccButtonSnap19(self):
         
 #mz_ccButton20
 def mz_ccButton20(self):
-    cmds.curve( degree = 1,\
+    shape = cmds.curve( degree = 1,\
                 knot = [0, 9.9992300000000007, 13.898834000000001, 17.798387999999999, 21.697965,\
                         25.597534, 35.596760000000003, 45.595986000000003, 49.495555000000003,\
                         53.395130999999999, 57.294685999999999, 61.194290000000002, 71.193520000000007,\
@@ -1743,6 +1768,10 @@ def mz_ccButton20(self):
                         (-0.80000000000000004, 5.6000000000000005, 0),\
                         (0, 4, 0)]\
               )
+    cmds.setAttr(shape + '.sx', 0.571)
+    cmds.setAttr(shape + '.sy', 0.571)
+    cmds.setAttr(shape + '.sz', 0.571)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
     #make group(s)
     for i in xrange(numGroups()):
@@ -1769,7 +1798,7 @@ def mz_ccButtonSnap20(self):
         
 #mz_ccButton21
 def mz_ccButton21(self):
-    cmds.curve( degree = 1,\
+    shape = cmds.curve( degree = 1,\
                 knot = [0, 4, 12.944272, 21.888544, 25.888544, 45.888544000000003,\
                 46.932133999999998, 47.975695999999999, 49.019289000000001, 50.062885999999999,\
                 51.106444000000003, 52.150039, 53.193634000000003, 54.237194000000002,\
@@ -1808,6 +1837,10 @@ def mz_ccButton21(self):
                         (0.20683760000000037, 5.6279535999999952, 0),\
                         (3.2500629960141186e-016, 5.5999999999999952, 0)]\
               )
+    cmds.setAttr(shape + '.sx', 0.5)
+    cmds.setAttr(shape + '.sy', 0.5)
+    cmds.setAttr(shape + '.sz', 0.5)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
     #make group(s)
     for i in xrange(numGroups()):
@@ -1834,7 +1867,7 @@ def mz_ccButtonSnap21(self):
         
 #mz_ccButton22
 def mz_ccButton22(self):
-    cmds.curve( degree = 1,\
+    shape = cmds.curve( degree = 1,\
                 knot = [0, 4, 12.944272, 21.888544, 25.888544, 45.888544000000003,\
                         46.932133999999998, 47.975695999999999, 49.019289000000001,\
                         50.062885999999999, 51.106444000000003, 52.150039, 53.193634000000003,\
@@ -1874,6 +1907,10 @@ def mz_ccButton22(self):
                          (-0.20683760000000004, 0.77204640000000002, 0),\
                          (0, 0.80000000000000004, 0)]\
               )
+    cmds.setAttr(shape + '.sx', 0.5)
+    cmds.setAttr(shape + '.sy', 0.5)
+    cmds.setAttr(shape + '.sz', 0.5)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
     #make group(s)
     for i in xrange(numGroups()):
@@ -1959,7 +1996,7 @@ def mz_ccButtonSnap23(self):
         
 #mz_ccButton24
 def mz_ccButton24(self):
-    cmds.curve( degree = 1,\
+    shape = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,\
                         21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36],\
                 point = [(4.4964032497318838e-016, 1.6000000000000012, -2.2557010682735437e-015),\
@@ -2000,6 +2037,11 @@ def mz_ccButton24(self):
                          (3.6082248300317588e-016, 4.4000000000000004, -2.9753977059954196e-015),\
                          (1.2000000000000006, 2.8000000000000003, -2.6201263381153696e-015)]\
               )
+    cmds.setAttr(shape + '.rz', -33)
+    cmds.setAttr(shape + '.sx', 0.8)
+    cmds.setAttr(shape + '.sy', 0.8)
+    cmds.setAttr(shape + '.sz', 0.8)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
     #make group(s)
     for i in xrange(numGroups()):
@@ -2026,7 +2068,7 @@ def mz_ccButtonSnap24(self):
         
 #mz_ccButton25
 def mz_ccButton25(self):
-    cmds.curve( degree = 1,\
+    shape = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,\
                         21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 35.58035297, 36],\
                 point = [(8.8817841970012528e-017, 1.6000000000000012, -2.5729962394826207e-016),\
@@ -2068,6 +2110,10 @@ def mz_ccButton25(self):
                          (1.2000000000000002, 3.2000000000000002, -7.1054273576010023e-016),\
                          (-1.2000000000000002, 3.2000000000000002, -7.1054273576010023e-016)]\
               )
+    cmds.setAttr(shape + '.rz', 180)
+    cmds.setAttr(shape + '.sx', 0.8)
+    cmds.setAttr(shape + '.sy', 0.8)
+    cmds.setAttr(shape + '.sz', 0.8)
     setColour()
     #make group(s)
     for i in xrange(numGroups()):
@@ -2221,7 +2267,7 @@ def mz_ccButtonSnap27(self):
         
 #mz_ccButton28
 def mz_ccButton28(self):
-    cmds.curve( degree = 1,\
+    gizmo = cmds.curve( degree = 1,\
                 knot = [0, 1.411065, 6.7736340000000004, 12.136203, 13.547268000000001, 18.909838000000001,\
                         24.272407000000001, 25.683471000000001, 31.046040999999999, 36.408610000000003,\
                         37.819674999999997, 43.182243999999997, 48.544812999999998, 49.955877999999998,\
@@ -2300,6 +2346,10 @@ def mz_ccButton28(self):
                          (4.1625947999999999, 0, 0),\
                          (3.3865561500000001, 0.10582994999999999, 0.18330270000000001)]\
               )
+    cmds.setAttr(gizmo + '.sx', 0.48)
+    cmds.setAttr(gizmo + '.sy', 0.48)
+    cmds.setAttr(gizmo + '.sz', 0.48)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
     #make group(s)
     for i in xrange(numGroups()):
@@ -2326,7 +2376,7 @@ def mz_ccButtonSnap28(self):
         
 #mz_ccButton29
 def mz_ccButton29(self):
-    cmds.curve( degree = 1,\
+    arrow = cmds.curve( degree = 1,\
                 knot = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],\
                 point = [(-2.0857863095420344, -9.3632573363181929e-025, 5.0971193932269898e-009),\
                          (2.0857863095420339, -5.1957367987512135e-016, 2.8284273758870384),\
@@ -2341,6 +2391,14 @@ def mz_ccButton29(self):
                          (-2.0857863095420344, -9.3632573363181929e-025, 5.0971193932269898e-009)]\
               )
     setColour()
+    cmds.setAttr(arrow + '.rx', 90)
+    cmds.setAttr(arrow + '.rz', 90)
+    cmds.setAttr(arrow + '.ty', 1.48)
+    cmds.setAttr(arrow + '.sx', 0.7)
+    cmds.setAttr(arrow + '.sy', 0.7)
+    cmds.setAttr(arrow + '.sz', 0.7)
+    cmds.move(0, 0, 0, arrow + ".scalePivot", arrow + ".rotatePivot", absolute=True)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
@@ -2366,7 +2424,7 @@ def mz_ccButtonSnap29(self):
         
 #mz_ccButton30
 def mz_ccButton30(self):
-    cmds.curve( degree = 1,\
+    arrow = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],\
                 point = [(-2.0857863095420344, -9.3632573363181929e-025, 5.0971193932269898e-009),\
                          (2.0857863095420335, 2.8284273758870384, -1.0846335936285916e-016),\
@@ -2386,6 +2444,14 @@ def mz_ccButton30(self):
                          (2.0857863095420335, 5.1957367987512135e-016, -2.8284273758870384),\
                          (-2.0857863095420344, -9.3632573363181929e-025, 5.0971193932269898e-009)]\
               )
+    cmds.setAttr(arrow + '.rx', 90)
+    cmds.setAttr(arrow + '.rz', 90)
+    cmds.setAttr(arrow + '.ty', 1.46)
+    cmds.setAttr(arrow + '.sx', 0.7)
+    cmds.setAttr(arrow + '.sy', 0.7)
+    cmds.setAttr(arrow + '.sz', 0.7)
+    cmds.move(0, 0, 0, arrow + ".scalePivot", arrow + ".rotatePivot", absolute=True)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
     #make group(s)
     for i in xrange(numGroups()):
@@ -2412,7 +2478,7 @@ def mz_ccButtonSnap30(self):
         
 #mz_ccButton31
 def mz_ccButton31(self):
-    cmds.curve( degree = 3,\
+    shape = cmds.curve( degree = 3,\
                 knot = [-0.0625, -0.03125, 0, 0.03125, 0.0625, 0.09375, 0.125, 0.15625, 0.1875,\
                         0.21875, 0.25, 0.28125, 0.3125, 0.34374999999999994, 0.375, 0.40625,\
                         0.4375, 0.46875, 0.5, 0.53125, 0.5625, 0.59375, 0.625, 0.65625,\
@@ -2454,6 +2520,10 @@ def mz_ccButton31(self):
                          (-9.1493801345217877e-016, 0.53470441984959038, -3.0203722237754098),\
                          (-0.58861386459314979, -0.53470441984959005, -2.9592563244160668)]\
               )
+    cmds.setAttr(shape + '.sx', 0.83)
+    cmds.setAttr(shape + '.sy', 0.83)
+    cmds.setAttr(shape + '.sz', 0.83)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
     #make group(s)
     for i in xrange(numGroups()):
@@ -2480,7 +2550,7 @@ def mz_ccButtonSnap31(self):
         
 #mz_ccButton32
 def mz_ccButton32(self):
-    cmds.curve( degree = 1,\
+    shape = cmds.curve( degree = 1,\
                 knot = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,\
                         26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,\
                         51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76],\
@@ -2562,6 +2632,10 @@ def mz_ccButton32(self):
                          (3.9996918294590156, 5.4462398553035891e-022, -8.8943846656142078e-006),\
                          (3.6915440258113987, 9.3628608078232439e-017, -1.5290712088321339)]\
               )
+    cmds.setAttr(shape + '.sx', 0.62)
+    cmds.setAttr(shape + '.sy', 0.62)
+    cmds.setAttr(shape + '.sz', 0.62)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
     #make group(s)
     for i in xrange(numGroups()):
@@ -2679,6 +2753,11 @@ def mz_ccButton33(self):
     #put the upperLip ctrl underneath lowerLip ctrl
     cmds.parent(upperLipCtrl, lowerLipCtrl)
     cmds.select(lowerLipCtrl, replace = 1)
+    cmds.setAttr(lowerLipCtrl + '.ry', 90)
+    cmds.setAttr(lowerLipCtrl + '.sx', 0.64)
+    cmds.setAttr(lowerLipCtrl + '.sy', 0.64)
+    cmds.setAttr(lowerLipCtrl + '.sz', 0.64)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
@@ -2704,7 +2783,7 @@ def mz_ccButtonSnap33(self):
 
 #mz_ccButton34
 def mz_ccButton34(self):
-    cmds.curve( degree = 3,\
+    shape = cmds.curve( degree = 3,\
                 knot = [-0.125, -0.0625, 0, 0.0625, 0.125, 0.1875, 0.25, 0.3125, 0.375, 0.4375, 0.5, 0.5625,\
                         0.625, 0.68749999999999989, 0.75, 0.8125, 0.875, 0.9375, 1, 1.0625, 1.125],\
                 point = [(7.2720718463205509e-017, 1.2994958327503943, -2.3650985432555687),\
@@ -2727,6 +2806,13 @@ def mz_ccButton34(self):
                          (-1.5721101582347884e-016, 0.88118819320136388, -2.5674507283722168),\
                          (-3.6236175452980667e-016, 0.84584253694393374, -2.3650985432555687)]\
               )
+    cmds.setAttr(shape + '.ry', 90)
+    cmds.setAttr(shape + '.ty', -0.705)
+    cmds.setAttr(shape + '.sx', 0.79)
+    cmds.setAttr(shape + '.sy', 0.79)
+    cmds.setAttr(shape + '.sz', 0.79)
+    cmds.move(0, 0, 0, shape + ".scalePivot", shape + ".rotatePivot", absolute=True)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
     #make group(s)
     for i in xrange(numGroups()):
@@ -2860,6 +2946,11 @@ def mz_ccButton36(self):
     cmds.parent(leftEyeCtrl, eyesCtrl)
     cmds.parent(rightEyeCtrl, eyesCtrl)
     cmds.select(eyesCtrl, replace = 1)
+    cmds.setAttr(eyesCtrl + '.ry', 90)
+    cmds.setAttr(eyesCtrl + '.sx', 0.65)
+    cmds.setAttr(eyesCtrl + '.sy', 0.65)
+    cmds.setAttr(eyesCtrl + '.sz', 0.65)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
@@ -2885,7 +2976,7 @@ def mz_ccButtonSnap36(self):
         
 #mz_ccButton37
 def mz_ccButton37(self):
-    cmds.curve( degree = 3,\
+    shape = cmds.curve( degree = 3,\
                 knot = [0, 0, 0, 0.027777777777777773, 0.055555555555555546, 0.083333333333333329,\
                         0.11111111111111109, 0.1388888888888889, 0.16666666666666666, 0.19444444444444445,\
                         0.22222222222222218, 0.25, 0.27777777777777779, 0.30555555555555558, 0.33333333333333331,\
@@ -2935,6 +3026,10 @@ def mz_ccButton37(self):
                          (0.003793853928484471, 1.3698453084484996, 1.169698579412189),\
                          (1.0630802479859386e-017, 1.1157645443069566, 1.1636414223939007)]\
               )
+    cmds.setAttr(shape + '.sx', 0.5)
+    cmds.setAttr(shape + '.sy', 0.5)
+    cmds.setAttr(shape + '.sz', 0.5)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
     #make group(s)
     for i in xrange(numGroups()):
@@ -2961,7 +3056,7 @@ def mz_ccButtonSnap37(self):
         
 #mz_ccButton38
 def mz_ccButton38(self):
-    cmds.curve( degree = 1,\
+    arrow = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,\
                         21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,\
                         41, 42, 43, 44, 45, 46, 47, 48],\
@@ -3015,6 +3110,10 @@ def mz_ccButton38(self):
                          (-2.9532336400027375, -7.4902633208010762e-017, 1.223252831104622),\
                          (-3.1365431247355415, -3.819023300387824e-017, 0.623693836140637)]\
               )
+    cmds.setAttr(arrow + '.sx', 0.785)
+    cmds.setAttr(arrow + '.sy', 0.785)
+    cmds.setAttr(arrow + '.sz', 0.785)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
     #make group(s)
     for i in xrange(numGroups()):
@@ -3041,7 +3140,7 @@ def mz_ccButtonSnap38(self):
         
 #mz_ccButton39
 def mz_ccButton39(self):
-    cmds.curve( degree = 1,\
+    shape = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],\
                 point = [(5.8520521406535408e-007, 0, -1.0398099422454834),\
                          (1.2360682487487793, 0, -3.8042259216308594),\
@@ -3060,6 +3159,10 @@ def mz_ccButton39(self):
                          (-1.2360686063766479, 0, -3.8042278289794922),\
                          (5.8520521406535408e-007, 0, -1.0398099422454834)]\
               )
+    cmds.setAttr(shape + '.sx', 0.61)
+    cmds.setAttr(shape + '.sy', 0.61)
+    cmds.setAttr(shape + '.sz', 0.61)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
     #make group(s)
     for i in xrange(numGroups()):
@@ -3086,7 +3189,7 @@ def mz_ccButtonSnap39(self):
         
 #mz_ccButton40
 def mz_ccButton40(self):
-    cmds.curve( degree = 1,\
+    shape = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,\
                         16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],\
                 point = [(0, 0, 0),\
@@ -3121,6 +3224,10 @@ def mz_ccButton40(self):
                          (0, 6.4000000000000004, 0),\
                          (8.8174643017417381e-016, 7.200006000000001, 0)]\
               )
+    cmds.setAttr(shape + '.sx', 0.5)
+    cmds.setAttr(shape + '.sy', 0.5)
+    cmds.setAttr(shape + '.sz', 0.5)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
     #make group(s)
     for i in xrange(numGroups()):
@@ -3147,7 +3254,7 @@ def mz_ccButtonSnap40(self):
         
 #mz_ccButton41
 def mz_ccButton41(self):
-    cmds.curve( degree = 1,\
+    shape = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6, 7, 8],\
                 point = [(2, 0, 0),\
                          (-2, 0, 0),\
@@ -3159,6 +3266,10 @@ def mz_ccButton41(self):
                          (-2, 0, 0),\
                          (2, 0, 0)]\
               )
+    cmds.setAttr(shape + '.sx', 0.66)
+    cmds.setAttr(shape + '.sy', 0.66)
+    cmds.setAttr(shape + '.sz', 0.66)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
     #make group(s)
     for i in xrange(numGroups()):
@@ -3185,7 +3296,7 @@ def mz_ccButtonSnap41(self):
         
 #mz_ccButton42
 def mz_ccButton42(self):
-    cmds.curve( degree = 1,\
+    shape = cmds.curve( degree = 1,\
                 knot = [0, 1.565366, 3.1307580000000002, 4.6961259999999996, 6.2614869999999998,\
                         7.8268849999999999, 9.3922439999999998, 15.392244, 16.957602000000001, 18.523,\
                         20.088360999999999, 21.653728999999998, 23.219121000000001, 24.784486999999999,\
@@ -3256,6 +3367,10 @@ def mz_ccButton42(self):
                          (1.4375950174761141, 4.4213115194744992, 0.38513704379993791),\
                          (1.4896573996191746, 4.4213115194744992, 9.6065034716741649e-008)]\
               )
+    cmds.setAttr(shape + '.sx', 0.68)
+    cmds.setAttr(shape + '.sy', 0.68)
+    cmds.setAttr(shape + '.sz', 0.68)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
     #make group(s)
     for i in xrange(numGroups()):
@@ -3282,7 +3397,7 @@ def mz_ccButtonSnap42(self):
         
 #mz_ccButton43
 def mz_ccButton43(self):
-    cmds.curve( degree = 1,\
+    shape = cmds.curve( degree = 1,\
                 knot = [0, 1, 2, 3, 4, 5, 6],\
                 point = [(0, 0, 0),\
                          (-2.7610131682735411e-031, 5.5999999999999996, -1.2434497875801752e-015),\
@@ -3292,6 +3407,10 @@ def mz_ccButton43(self):
                          (0.69999999999999996, 5.5999999999999996, -1.3988810110276972e-015),\
                          (-2.7610131682735411e-031, 5.5999999999999996, -1.2434497875801752e-015)]\
               )
+    cmds.setAttr(shape + '.sx', 0.5)
+    cmds.setAttr(shape + '.sy', 0.5)
+    cmds.setAttr(shape + '.sz', 0.5)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
     #make group(s)
     for i in xrange(numGroups()):
@@ -3318,7 +3437,7 @@ def mz_ccButtonSnap43(self):
         
 #mz_ccButton44
 def mz_ccButton44(self):
-    cmds.curve( degree = 3,\
+    shape = cmds.curve( degree = 3,\
                 knot = [0, 0, 0, 0.50358628617148704, 1.4337586472378248, 2.4062686187308571,\
                         3.2255926458086837, 4.3739460616280263, 5.1168801677211926, 5.8776710459855988,\
                         6.9714677697371412, 7.9607070521530687, 8.9970790790600361, 10.514734166445262,\
@@ -3366,6 +3485,11 @@ def mz_ccButton44(self):
                          (1.0755938101270506, 0.11090083097847503, 1.3172225167547986e-016),\
                          (1, 0, 1.2246467991473532e-016)]\
               )
+    cmds.setAttr(shape + '.ry', -90)
+    cmds.setAttr(shape + '.sx', 0.43)
+    cmds.setAttr(shape + '.sy', 0.43)
+    cmds.setAttr(shape + '.sz', 0.43)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     setColour()
     #make group(s)
     for i in xrange(numGroups()):
@@ -3533,6 +3657,11 @@ def mz_ccButton45(self):
     cmds.parent(fingerCtrl3, pawCtrl)
     cmds.parent(fingerCtrl4, pawCtrl)
     cmds.select(pawCtrl, replace = 1)
+    cmds.setAttr(pawCtrl + '.rx', 90)
+    cmds.setAttr(pawCtrl + '.sx', 0.52)
+    cmds.setAttr(pawCtrl + '.sy', 0.52)
+    cmds.setAttr(pawCtrl + '.sz', 0.52)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
     #make group(s)
     for i in xrange(numGroups()):
         cmds.group()
@@ -3623,8 +3752,380 @@ def snapTriangle(self):
         cmds.delete(pConst)
 
 
+def shapePyramid(self):
+    shape = cmds.curve( degree = 1,\
+                knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],\
+                point = [(0, 2, 0), (1, 0, -1), (-1, 0, -1), (0, 2, 0), (-1, 0, 1), (1, 0, 1), (0, 2, 0), (1, 0, -1), (1, 0, 1), (-1, 0, 1), (-1, 0, -1)]
+              )
+    
+    cmds.setAttr(shape + '.sx', 2)
+    cmds.setAttr(shape + '.sy', 2)
+    cmds.setAttr(shape + '.sz', 2)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
+    setColour()
+
+    #make group(s)
+    for i in xrange(numGroups()):
+        cmds.group()
+        cmds.xform(pivots = (0, 0, 0))
+           
+def snapPyramid(self):
+    #the selected object(s)
+    selObj = cmds.ls(selection = 1)
+    
+    #if no object is selected, create the ctrl at the center of the scene
+    if len(selObj) == 0:
+        shapePyramid(self)
+            
+    #else, put the ctrl at the centre of the object(s)       
+    else:
+        shapePyramid(self)
+        selCtrl = cmds.ls(selection = 1)
+        pConst = cmds.parentConstraint(selObj, selCtrl[0])
+        cmds.delete(pConst)
 
 
+def shapeCone(self):
+    shape = cmds.curve( degree = 1,\
+                knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],\
+                point = [(0.5, -1, 0.866025), (-0.5, -1, 0.866025), (0, 1, 0), (0.5, -1, 0.866025), (1, -1, 0), (0, 1, 0), (0.5, -1, -0.866025), (1, -1, 0), (0, 1, 0),\
+                        (-0.5, -1, -0.866026), (0.5, -1, -0.866025), (0, 1, 0), (-1, -1, -1.5885e-007), (-0.5, -1, -0.866026), (0, 1, 0), (-0.5, -1, 0.866025), (-1, -1, -1.5885e-007)]
+              )
+    cmds.setAttr(shape + '.ty', 2)
+    cmds.setAttr(shape + '.sx', 2)
+    cmds.setAttr(shape + '.sy', 2)
+    cmds.setAttr(shape + '.sz', 2)
+    cmds.move(0, 0, 0, shape + ".scalePivot", shape + ".rotatePivot", absolute=True)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
+    setColour()
+
+    #make group(s)
+    for i in xrange(numGroups()):
+        cmds.group()
+        cmds.xform(pivots = (0, 0, 0))
+           
+def snapCone(self):
+    #the selected object(s)
+    selObj = cmds.ls(selection = 1)
+    
+    #if no object is selected, create the ctrl at the center of the scene
+    if len(selObj) == 0:
+        shapeCone(self)
+            
+    #else, put the ctrl at the centre of the object(s)       
+    else:
+        shapeCone(self)
+        selCtrl = cmds.ls(selection = 1)
+        pConst = cmds.parentConstraint(selObj, selCtrl[0])
+        cmds.delete(pConst)
+
+
+def shapeRombus(self):
+    shape = cmds.curve( degree = 1,\
+                knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],\
+                point = [(0,1,0), (1,0,0), (0,0,1), (-1,0,0), (0,0,-1), (0,1,0), (0,0,1), (0,-1,0), (0,0,-1), (1,0,0), (0,1,0), (-1,0,0), (0,-1,0), (1,0,0)]
+              )
+    cmds.setAttr(shape + '.sx', 2)
+    cmds.setAttr(shape + '.sy', 2)
+    cmds.setAttr(shape + '.sz', 2)
+    cmds.move(0, 0, 0, shape + ".scalePivot", shape + ".rotatePivot", absolute=True)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
+    setColour()
+
+    #make group(s)
+    for i in xrange(numGroups()):
+        cmds.group()
+        cmds.xform(pivots = (0, 0, 0))
+           
+def snapRombus(self):
+    #the selected object(s)
+    selObj = cmds.ls(selection = 1)
+    
+    #if no object is selected, create the ctrl at the center of the scene
+    if len(selObj) == 0:
+        shapeRombus(self)
+            
+    #else, put the ctrl at the centre of the object(s)       
+    else:
+        shapeRombus(self)
+        selCtrl = cmds.ls(selection = 1)
+        pConst = cmds.parentConstraint(selObj, selCtrl[0])
+        cmds.delete(pConst)
+
+
+def shapeArrow90(self):
+    shape = cmds.curve( degree = 1,\
+                knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],\
+                point = [(-0.251045,0,1.015808), (-0.761834,0,0.979696), (-0.486547,0,0.930468), (-0.570736,0,0.886448), (-0.72786,0,0.774834), (-0.909301,0,0.550655),\
+                        (-1.023899,0,0.285854), (-1.063053,0,9.80765e-009), (-0.961797,0,8.87346e-009), (-0.926399,0,0.258619), (-0.822676,0,0.498232), (-0.658578,0,0.701014),\
+                        (-0.516355,0,0.802034), (-0.440202,0,0.841857), (-0.498915,0,0.567734), (-0.251045,0,1.015808)]
+              )
+    cmds.setAttr(shape + '.sx', 2)
+    cmds.setAttr(shape + '.sy', 2)
+    cmds.setAttr(shape + '.sz', 2)
+    cmds.setAttr(shape + '.tx', 0.495)
+    cmds.setAttr(shape + '.tz', -0.03)
+    cmds.move(0, 0, 0, shape + ".scalePivot", shape + ".rotatePivot", absolute=True)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
+    setColour()
+
+    #make group(s)
+    for i in xrange(numGroups()):
+        cmds.group()
+        cmds.xform(pivots = (0, 0, 0))
+           
+def snapArrow90(self):
+    #the selected object(s)
+    selObj = cmds.ls(selection = 1)
+    
+    #if no object is selected, create the ctrl at the center of the scene
+    if len(selObj) == 0:
+        shapeArrow90(self)
+            
+    #else, put the ctrl at the centre of the object(s)       
+    else:
+        shapeArrow90(self)
+        selCtrl = cmds.ls(selection = 1)
+        pConst = cmds.parentConstraint(selObj, selCtrl[0])
+        cmds.delete(pConst)
+
+
+def shapeArrow180(self):
+    shape = cmds.curve( degree = 1,\
+                knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28],\
+                point = [(-0.251045,0,-1.015808), (-0.761834,0,-0.979696), (-0.486547,0,-0.930468), (-0.570736,0,-0.886448), (-0.72786,0,-0.774834),\
+                        (-0.909301,0,-0.550655), (-1.023899,0,-0.285854), (-1.063053,0,9.80765e-009), (-1.023899,0,0.285854), (-0.909301,0,0.550655),\
+                        (-0.72786,0,0.774834), (-0.570736,0,0.886448), (-0.486547,0,0.930468), (-0.761834,0,0.979696), (-0.251045,0,1.015808), (-0.498915,0,0.567734),\
+                        (-0.440202,0,0.841857), (-0.516355,0,0.802034), (-0.658578,0,0.701014), (-0.822676,0,0.498232), (-0.926399,0,0.258619), (-0.961797,0,8.87346e-009),\
+                        (-0.926399,0,-0.258619), (-0.822676,0,-0.498232), (-0.658578,0,-0.701014), (-0.516355,0,-0.802034), (-0.440202,0,-0.841857), (-0.498915,0,-0.567734), (-0.251045,0,-1.015808)]
+              )
+    cmds.setAttr(shape + '.sx', 1.95)
+    cmds.setAttr(shape + '.sy', 1.95)
+    cmds.setAttr(shape + '.sz', 1.95)
+    cmds.setAttr(shape + '.ry', 90)
+    cmds.setAttr(shape + '.tz', -0.465)
+    cmds.move(0, 0, 0, shape + ".scalePivot", shape + ".rotatePivot", absolute=True)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
+    setColour()
+
+    #make group(s)
+    for i in xrange(numGroups()):
+        cmds.group()
+        cmds.xform(pivots = (0, 0, 0))
+           
+def snapArrow180(self):
+    #the selected object(s)
+    selObj = cmds.ls(selection = 1)
+    
+    #if no object is selected, create the ctrl at the center of the scene
+    if len(selObj) == 0:
+        shapeArrow180(self)
+            
+    #else, put the ctrl at the centre of the object(s)       
+    else:
+        shapeArrow180(self)
+        selCtrl = cmds.ls(selection = 1)
+        pConst = cmds.parentConstraint(selObj, selCtrl[0])
+        cmds.delete(pConst)
+
+
+def shapeCross(self):
+    shape = cmds.curve( degree = 1,\
+                knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],\
+                point = [(0.4,0,-0.4), (0.4,0,-2), (-0.4,0,-2), (-0.4,0,-0.4), (-2,0,-0.4), (-2,0,0.4), (-0.4,0,0.4), (-0.4,0,2), (0.4,0,2), (0.4,0,0.4), (2,0,0.4), (2,0,-0.4), (0.4,0,-0.4)]
+              )
+    setColour()
+
+    #make group(s)
+    for i in xrange(numGroups()):
+        cmds.group()
+        cmds.xform(pivots = (0, 0, 0))
+           
+def snapCross(self):
+    #the selected object(s)
+    selObj = cmds.ls(selection = 1)
+    
+    #if no object is selected, create the ctrl at the center of the scene
+    if len(selObj) == 0:
+        shapeCross(self)
+            
+    #else, put the ctrl at the centre of the object(s)       
+    else:
+        shapeCross(self)
+        selCtrl = cmds.ls(selection = 1)
+        pConst = cmds.parentConstraint(selObj, selCtrl[0])
+        cmds.delete(pConst)
+
+
+def shapeArrowQuad(self):
+    shape = cmds.curve( degree = 1,\
+                knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],\
+                point = [(0,0,-1.98), (-0.495,0,-1.32), (-0.165,0,-1.32), (-0.165,0,-0.165), (-1.32,0,-0.165), (-1.32,0,-0.495),\
+                        (-1.98,0,0), (-1.32,0,0.495), (-1.32,0,0.165), (-0.165,0,0.165), (-0.165,0,1.32), (-0.495,0,1.32), (0,0,1.98),\
+                        (0.495,0,1.32), (0.165,0,1.32), (0.165,0,0.165), (1.32,0,0.165), (1.32,0,0.495), (1.98,0,0), (1.32,0,-0.495),\
+                        (1.32,0,-0.165), (0.165,0,-0.165), (0.165,0,-1.32), (0.495,0,-1.32), (0,0,-1.98)]
+              )
+    setColour()
+
+    #make group(s)
+    for i in xrange(numGroups()):
+        cmds.group()
+        cmds.xform(pivots = (0, 0, 0))
+           
+def snapArrowQuad(self):
+    #the selected object(s)
+    selObj = cmds.ls(selection = 1)
+    
+    #if no object is selected, create the ctrl at the center of the scene
+    if len(selObj) == 0:
+        shapeArrowQuad(self)
+            
+    #else, put the ctrl at the centre of the object(s)       
+    else:
+        shapeArrowQuad(self)
+        selCtrl = cmds.ls(selection = 1)
+        pConst = cmds.parentConstraint(selObj, selCtrl[0])
+        cmds.delete(pConst)
+
+
+def shapeArrowOcto(self):
+    shape = cmds.curve( degree = 1,\
+                knot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,\
+                        25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48],\
+                point = [(-1.8975,0,0), (-1.4025,0,0.37125), (-1.4025,0,0.12375), (-0.380966,0,0.157801), (-1.079222,0,0.904213),\
+                        (-1.254231,0,0.729204), (-1.341735,0,1.341735), (-0.729204,0,1.254231), (-0.904213,0,1.079222), (-0.157801,0,0.380966),\
+                        (-0.12375,0,1.4025), (-0.37125,0,1.4025), (0,0,1.8975), (0.37125,0,1.4025), (0.12375,0,1.4025), (0.157801,0,0.380966),\
+                        (0.904213,0,1.079222), (0.729204,0,1.254231), (1.341735,0,1.341735), (1.254231,0,0.729204), (1.079222,0,0.904213),\
+                        (0.380966,0,0.157801), (1.4025,0,0.12375), (1.4025,0,0.37125), (1.8975,0,0), (1.4025,0,-0.37125), (1.4025,0,-0.12375),\
+                        (0.380966,0,-0.157801), (1.079222,0,-0.904213), (1.254231,0,-0.729204), (1.341735,0,-1.341735), (0.729204,0,-1.254231),\
+                        (0.904213,0,-1.079222), (0.157801,0,-0.380966), (0.12375,0,-1.4025), (0.37125,0,-1.4025), (0,0,-1.8975), (-0.37125,0,-1.4025),\
+                        (-0.12375,0,-1.4025), (-0.157801,0,-0.380966), (-0.904213,0,-1.079222), (-0.729204,0,-1.254231), (-1.341735,0,-1.341735),\
+                        (-1.254231,0,-0.729204), (-1.079222,0,-0.904213), (-0.380966,0,-0.157801), (-1.4025,0,-0.12375), (-1.4025,0,-0.37125), (-1.8975,0,0)]
+              )
+    setColour()
+
+    #make group(s)
+    for i in xrange(numGroups()):
+        cmds.group()
+        cmds.xform(pivots = (0, 0, 0))
+           
+def snapArrowOcto(self):
+    #the selected object(s)
+    selObj = cmds.ls(selection = 1)
+    
+    #if no object is selected, create the ctrl at the center of the scene
+    if len(selObj) == 0:
+        shapeArrowOcto(self)
+            
+    #else, put the ctrl at the centre of the object(s)       
+    else:
+        shapeArrowOcto(self)
+        selCtrl = cmds.ls(selection = 1)
+        pConst = cmds.parentConstraint(selObj, selCtrl[0])
+        cmds.delete(pConst)
+
+
+def shapeCog(self):
+    circle = cmds.circle(nr=(0,1,0), c=(0,0,0), sw=360, r=1, d=3, ut=0, tol=0.01, s=16, ch=1)[0]
+    cmds.select(circle + '.cv[0]', circle + '.cv[2]', circle + '.cv[4]', circle + '.cv[6]', circle + '.cv[8]', circle + '.cv[10]', circle + '.cv[12]', circle + '.cv[14]', replace=True)
+    cmds.scale(2.67, 2.67, 2.67, pivot=(0,0,0), relative=True)
+    cmds.select(circle, replace=True)
+    setColour()
+
+    #make group(s)
+    for i in xrange(numGroups()):
+        cmds.group()
+        cmds.xform(pivots = (0, 0, 0))
+           
+def snapCog(self):
+    #the selected object(s)
+    selObj = cmds.ls(selection = 1)
+    
+    #if no object is selected, create the ctrl at the center of the scene
+    if len(selObj) == 0:
+        shapeCog(self)
+            
+    #else, put the ctrl at the centre of the object(s)       
+    else:
+        shapeCog(self)
+        selCtrl = cmds.ls(selection = 1)
+        pConst = cmds.parentConstraint(selObj, selCtrl[0])
+        cmds.delete(pConst)
+
+
+def shapeSpiral(self):
+    shape = cmds.curve(degree = 3,\
+                knot = [0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 13, 13],\
+                point = [(0.474561,0,-1.241626), (0.171579,0,-1.214307), (-0.434384,0,-1.159672), (-1.124061,0,-0.419971),\
+                        (-1.169741,0,0.305922), (-0.792507,0,1.018176), (-0.0412486,0,1.262687), (0.915809,0,1.006098), (1.258635,0,0.364883),\
+                        (1.032378,0,-0.461231), (0.352527,0,-0.810017), (-0.451954,0,-0.43765), (-0.634527,0,0.208919), (-0.0751226,0,0.696326),\
+                        (0.292338,0,0.414161), (0.476068,0,0.273078)]
+              )
+    cmds.setAttr(shape + '.sx', 1.7)
+    cmds.setAttr(shape + '.sy', 1.7)
+    cmds.setAttr(shape + '.sz', 1.7)
+    cmds.makeIdentity(apply = 1, translate = True, rotate = True, scale = True, normal = 0)
+    setColour()
+
+    #make group(s)
+    for i in xrange(numGroups()):
+        cmds.group()
+        cmds.xform(pivots = (0, 0, 0))
+           
+def snapSpiral(self):
+    #the selected object(s)
+    selObj = cmds.ls(selection = 1)
+    
+    #if no object is selected, create the ctrl at the center of the scene
+    if len(selObj) == 0:
+        shapeSpiral(self)
+            
+    #else, put the ctrl at the centre of the object(s)       
+    else:
+        shapeSpiral(self)
+        selCtrl = cmds.ls(selection = 1)
+        pConst = cmds.parentConstraint(selObj, selCtrl[0])
+        cmds.delete(pConst)
+
+
+def shapeBulb(self):
+    shape = cmds.curve(degree = 3,\
+                knot = [0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,\
+                        32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 59, 59],\
+                point = [(-0.139471,-0.798108,0), (-0.139471,-0.798108,0), (-0.139471,-0.798108,0), (-0.299681,-0.672294,0),\
+                        (-0.299681,-0.672294,0), (-0.299681,-0.672294,0), (-0.121956,-0.578864,0), (-0.121956,-0.578864,0), (-0.121956,-0.578864,0),\
+                        (-0.285304,-0.51952,0), (-0.285304,-0.51952,0), (-0.0744873,-0.442806,0), (-0.0744873,-0.442806,0), (-0.287769,-0.373086,0),\
+                        (-0.287769,-0.373086,0), (-0.100386,-0.296549,0), (-0.100386,-0.296549,0), (-0.264344,-0.205725,0), (-0.264344,-0.205725,0),\
+                        (-0.262544,-0.0993145,0), (-0.262544,-0.0993145,0), (-0.167051,-0.0613459,0), (-0.167051,-0.0613459,0), (-0.167051,-0.0613459,0),\
+                        (-0.166024,0.0163458,0), (-0.157394,0.232092,0), (-0.367902,0.680843,0), (-0.96336,1.224522,0), (-1.006509,1.992577,0), (-0.316123,2.613925,0),\
+                        (0.561786,2.548479,0), (1.094888,2.001207,0), (1.051638,1.166965,0), (0.436419,0.66543,0), (0.13283,0.232092,0), (0.15009,0.0163458,0),\
+                        (0.15073,-0.046628,0), (0.15073,-0.046628,0), (0.270326,-0.0955798,0), (0.270326,-0.0955798,0), (0.267815,-0.208156,0), (0.267815,-0.208156,0),\
+                        (0.0884224,-0.291145,0), (0.0884224,-0.291145,0), (0.292477,-0.366091,0), (0.292477,-0.366091,0), (0.0946189,-0.439723,0), (0.0946189,-0.439723,0),\
+                        (0.306664,-0.508968,0), (0.306664,-0.508968,0), (0.112488,-0.57513,0), (0.112488,-0.57513,0), (0.323789,-0.674644,0), (0.323789,-0.674644,0),\
+                        (0.152097,-0.794645,0), (0.152097,-0.794645,0), (0.152097,-0.794645,0), (0.106716,-0.907397,0), (0.0103741,-1.003739,0), (-0.0919896,-0.907397,0),\
+                        (-0.139471,-0.798108,0), (-0.139471,-0.798108,0)]
+              )
+    setColour()
+
+    #make group(s)
+    for i in xrange(numGroups()):
+        cmds.group()
+        cmds.xform(pivots = (0, 0, 0))
+           
+def snapBulb(self):
+    #the selected object(s)
+    selObj = cmds.ls(selection = 1)
+    
+    #if no object is selected, create the ctrl at the center of the scene
+    if len(selObj) == 0:
+        shapeBulb(self)
+            
+    #else, put the ctrl at the centre of the object(s)       
+    else:
+        shapeBulb(self)
+        selCtrl = cmds.ls(selection = 1)
+        pConst = cmds.parentConstraint(selObj, selCtrl[0])
+        cmds.delete(pConst)
 
 
 #run the script        
