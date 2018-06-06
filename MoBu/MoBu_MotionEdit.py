@@ -1,15 +1,7 @@
-# Proxi motion editing toolkit
+# -*- coding: utf-8 -*-
 
 
-
-# To do:
-# 
-# Nothing for now... 
-#
-#
-#
-#
-
+# Motion editing toolkit
 
 from pyfbsdk import *
 from pyfbsdk_additions import *
@@ -26,7 +18,7 @@ playBack = FBPlayerControl()
 lStory = FBStory()
 
 # Version
-version = 1.02
+version = 1.20
 
 
 # Plot options
@@ -392,6 +384,77 @@ def toggleCameraGrid():
     FBSystem().Renderer.GetCameraInPane(0).ViewShowGrid = not FBSystem().Renderer.GetCameraInPane(0).ViewShowGrid
 
 
+def deleteEmptyGroups():
+    numGroups = len(lScene.Groups)
+    if numGroups == 0:
+        print "No groups in scene"
+        return
+        
+    for i in range(numGroups, 0, -1):
+        x = i-1
+        if lScene.Groups[x].GetSrcCount() == 0:
+            lScene.Groups[x].FBDelete()
+
+
+def deleteOrphanControlRigs():
+    toDelete = []
+    for ctrl in lScene.ControlSets:
+        hasDst = False
+        for i in range(ctrl.GetDstCount()):
+            node = ctrl.GetDst(i)
+            if node.__class__ is FBCharacter:
+                hasDst = True
+        
+        #print '{} has destination: {}'.format(ctrl.Name, hasDst)
+        if not hasDst:
+            toDelete.append(ctrl)
+            
+    if len(toDelete) == 0:
+        print "No unused control rigs in scene"
+        return
+
+    for i in range(len(toDelete), 0, -1):
+        x = i-1
+        toDelete[x].FBDelete()
+
+
+def getSelectedStoryClips():
+    selClips = []
+    for folder in lStory.RootFolder.Childs:
+        for track in folder.Tracks:
+            for clip in track.Clips:
+                if clip.Selected:
+                    selClips.append(clip)
+    
+    for track in lStory.RootFolder.Tracks:
+        for clip in track.Clips:
+            if clip.Selected:
+                selClips.append(clip)
+    
+    return selClips
+
+
+def nudgeClip(offset):
+    selClips = getSelectedStoryClips()
+    if len(selClips) == 0:
+        FBMessageBox("Error", "No story clips selected", "OK" )
+        return
+        
+    for clip in selClips:
+        cur = clip.Start.GetFrame()
+        clip.Start = FBTime(0, 0, 0, cur + offset)
+
+
+def zeroClips():
+    selClips = getSelectedStoryClips()
+    if len(selClips) == 0:
+        FBMessageBox("Error", "No story clips selected", "OK" )
+        return
+    
+    for clip in selClips:
+        clip.Start = FBTime(0)
+
+
 
 ##
 ## BUTTON AND UI WRAPPERS BELOW
@@ -452,6 +515,20 @@ def buttonPlotPopup(control, event):
 def buttonToggleGrid(control, event):
     toggleCameraGrid()
 
+def buttonDeleteEmptyGroups(control, event):
+    deleteEmptyGroups()
+
+def buttonDeleteOrphanControlRigs(control, event):
+    deleteOrphanControlRigs()
+
+def buttonNudgeClipForward(control, event):
+    nudgeClip(1)
+
+def buttonNudgeClipBackward(control, event):
+    nudgeClip(-1)
+
+def buttonZeroClips(control, event):
+    zeroClips()
 
 
 ##
@@ -478,12 +555,12 @@ def PopulateLayout(mainLyt):
     
     box = FBHBoxLayout(FBAttachType.kFBAttachRight)
     b = FBButton()
-    b.Caption = "Clipping plane  -->"
+    b.Caption = "Clipping plane ►"
     b.Justify = FBTextJustify.kFBTextJustifyCenter
     box.AddRelative(b, 0.5)
     b.OnClick.Add(buttonMoveClipPlaneForward)
     b = FBButton()
-    b.Caption = "<--  Clipping plane"
+    b.Caption = "◄ Clipping plane"
     b.Justify = FBTextJustify.kFBTextJustifyCenter
     box.AddRelative(b, 0.5)
     b.OnClick.Add(buttonMoveClipPlaneBackward)
@@ -541,6 +618,22 @@ def PopulateLayout(mainLyt):
     box.AddRelative(b, 1.0)
     b.OnClick.Add(buttonDeleteMaterials)
     main.Add(box, 35)
+    
+    box = FBHBoxLayout(FBAttachType.kFBAttachRight)
+    b = FBButton()
+    b.Caption = "Delete empty groups in scene"
+    b.Justify = FBTextJustify.kFBTextJustifyCenter
+    box.AddRelative(b, 1.0)
+    b.OnClick.Add(buttonDeleteEmptyGroups)
+    main.Add(box, 35)
+    
+    box = FBHBoxLayout(FBAttachType.kFBAttachRight)
+    b = FBButton()
+    b.Caption = "Delete unused control rigs in scene"
+    b.Justify = FBTextJustify.kFBTextJustifyCenter
+    box.AddRelative(b, 1.0)
+    b.OnClick.Add(buttonDeleteOrphanControlRigs)
+    main.Add(box, 35)
 
     tab.Add(name,main)
 
@@ -549,10 +642,31 @@ def PopulateLayout(mainLyt):
     name = "Story tools"
     main = FBVBoxLayout()
     main.AddRegion(name,name, x, y, w, h)
+    
+    box = FBHBoxLayout(FBAttachType.kFBAttachRight)
+    b = FBButton()
+    b.Caption = "Nudge clips ►"
+    b.Justify = FBTextJustify.kFBTextJustifyCenter
+    box.AddRelative(b, 0.5)
+    b.OnClick.Add(buttonNudgeClipForward)
+    b = FBButton()
+    b.Caption = "◄ Nudge clips"
+    b.Justify = FBTextJustify.kFBTextJustifyCenter
+    box.AddRelative(b, 0.5)
+    b.OnClick.Add(buttonNudgeClipBackward)
+    main.Add(box, 35)
+    
+    box = FBHBoxLayout(FBAttachType.kFBAttachRight)
+    b = FBButton()
+    b.Caption = "Snap selected clips to frame 0"
+    b.Justify = FBTextJustify.kFBTextJustifyCenter
+    box.AddRelative(b, 1.0)
+    b.OnClick.Add(buttonZeroClips)
+    main.Add(box, 35)
 
     box = FBHBoxLayout(FBAttachType.kFBAttachRight)
     b = FBButton()
-    b.Caption = "Plot selected character tracks (Story --> Skeleton)"
+    b.Caption = "Plot selected character tracks (Story → Skeleton)"
     b.Justify = FBTextJustify.kFBTextJustifyCenter
     box.AddRelative(b, 1.0)
     b.OnClick.Add(buttonPlotSelectedCharactersStory)
@@ -560,7 +674,7 @@ def PopulateLayout(mainLyt):
 
     box = FBHBoxLayout(FBAttachType.kFBAttachRight)
     b = FBButton()
-    b.Caption = "Plot selected generic/animation tracks (Story --> Misc)"
+    b.Caption = "Plot selected generic/animation tracks (Story → Misc)"
     b.Justify = FBTextJustify.kFBTextJustifyCenter
     box.AddRelative(b, 1.0)
     b.OnClick.Add(buttonPlotSelectedAnimationStory)
@@ -584,7 +698,7 @@ def PopulateLayout(mainLyt):
 
     box = FBHBoxLayout(FBAttachType.kFBAttachRight)
     b = FBButton()
-    b.Caption = "Plot CURRENT character (Skeleton --> Ctrl rig)"
+    b.Caption = "Plot CURRENT character (Skeleton → Ctrl rig)"
     b.Justify = FBTextJustify.kFBTextJustifyCenter
     box.AddRelative(b, 1.0)
     b.OnClick.Add(buttonPlotCurrentCharacterRig)
@@ -592,7 +706,7 @@ def PopulateLayout(mainLyt):
 
     box = FBHBoxLayout(FBAttachType.kFBAttachRight)
     b = FBButton()
-    b.Caption = "Plot CURRENT character (Ctrl rig --> Skeleton)"
+    b.Caption = "Plot CURRENT character (Ctrl rig → Skeleton)"
     b.Justify = FBTextJustify.kFBTextJustifyCenter
     box.AddRelative(b, 1.0)
     b.OnClick.Add(buttonPlotCurrentCharacterSkeleton)
@@ -600,7 +714,7 @@ def PopulateLayout(mainLyt):
 
     box = FBHBoxLayout(FBAttachType.kFBAttachRight)
     b = FBButton()
-    b.Caption = "Plot SELECTED characters (Skeleton --> Ctrl rig)"
+    b.Caption = "Plot SELECTED characters (Skeleton → Ctrl rig)"
     b.Justify = FBTextJustify.kFBTextJustifyCenter
     box.AddRelative(b, 1.0)
     b.OnClick.Add(buttonPlotSelectedCharactersRig)
@@ -608,7 +722,7 @@ def PopulateLayout(mainLyt):
 
     box = FBHBoxLayout(FBAttachType.kFBAttachRight)
     b = FBButton()
-    b.Caption = "Plot SELECTED characters (Ctrl rig --> Skeleton)"
+    b.Caption = "Plot SELECTED characters (Ctrl rig → Skeleton)"
     b.Justify = FBTextJustify.kFBTextJustifyCenter
     box.AddRelative(b, 1.0)
     b.OnClick.Add(buttonPlotSelectedCharactersSkeleton)
@@ -616,7 +730,7 @@ def PopulateLayout(mainLyt):
 
     box = FBHBoxLayout(FBAttachType.kFBAttachRight)
     b = FBButton()
-    b.Caption = "Plot ALL characters (Skeleton --> Ctrl rig)"
+    b.Caption = "Plot ALL characters (Skeleton → Ctrl rig)"
     b.Justify = FBTextJustify.kFBTextJustifyCenter
     box.AddRelative(b, 1.0)
     b.OnClick.Add(buttonPlotAllCharactersRig)
@@ -624,7 +738,7 @@ def PopulateLayout(mainLyt):
 
     box = FBHBoxLayout(FBAttachType.kFBAttachRight)
     b = FBButton()
-    b.Caption = "Plot ALL characters (Ctrl rig --> Skeleton)"
+    b.Caption = "Plot ALL characters (Ctrl rig → Skeleton)"
     b.Justify = FBTextJustify.kFBTextJustifyCenter
     box.AddRelative(b, 1.0)
     b.OnClick.Add(buttonPlotAllCharactersSkeleton)
