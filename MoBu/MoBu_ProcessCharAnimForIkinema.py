@@ -12,6 +12,8 @@ version = 0.1
 branchCache = []
 append = '_RootMotion.fbx'
 errors = 0
+invertZ = FBButton()
+hipZisY = FBButton()
 
 
 # Get Translation offset for pelvis/hips node, in relation to the root/reference
@@ -36,7 +38,7 @@ def copyAnimation(src, dst):
     options.UseConstantKeyReducer = False
     options.PlotTranslationOnRootOnly = False
     
-    # Cache SRC and DST T/R
+    # Key dst/root rotations
     dstRef = dst.Clone()
     dstRef.Name = 'Cache'
     null = src.Clone()
@@ -51,6 +53,7 @@ def copyAnimation(src, dst):
     
     null.Selected = True
     dstRef.Selected = True
+    #system.CurrentTake.PlotTakeOnSelected(FBTime(0,0,0,1))
     system.CurrentTake.PlotTakeOnSelected(options)
     con.Active = False
     null.Selected = False
@@ -62,8 +65,8 @@ def copyAnimation(src, dst):
     dst.Translation.GetAnimationNode().Nodes[2].FCurve = null.Translation.GetAnimationNode().Nodes[2].FCurve
     
     # Delete source keys
-    src.Translation.GetAnimationNode().Nodes[0].FCurve = FBFCurve() #X Trans (lcl)
-    src.Translation.GetAnimationNode().Nodes[1].FCurve = FBFCurve() #Y Trans (lcl)
+    #src.Translation.GetAnimationNode().Nodes[0].FCurve = FBFCurve() #X Trans (lcl)
+    #src.Translation.GetAnimationNode().Nodes[1].FCurve = FBFCurve() #Y Trans (lcl)
     
     # Give dst back it's orignal rotation keys (now plotted, in case it didn't have any or they were sparse)
     dst.Rotation.GetAnimationNode().Nodes[0].FCurve = dstRef.Rotation.GetAnimationNode().Nodes[0].FCurve
@@ -87,7 +90,7 @@ def invertZTranslation(dst):
 def getSkeletonRoot():
     root = None
     for comp in scene.Components:
-        if 'root' in comp.Name and comp.__class__ is FBModelSkeleton:
+        if 'root' == comp.Name.lower() and (comp.__class__ is FBModelSkeleton or comp.__class__ is FBModelRoot):
             root = comp
             break
     
@@ -98,7 +101,7 @@ def getSkeletonRoot():
 def getSkeletonPelvis(root):
     pelvis = None
     for child in root.Children:
-        if 'pelvis' in child.Name:
+        if 'pelvis' == child.Name.lower():
             pelvis = child
             break
     
@@ -119,11 +122,35 @@ def getCharacterFromRoot(root):
 
 # Move root animation down n units, and counter-move pelvis up by the same amount
 def offsetHipsAndRoot(root, pelvis, offset):
+    
+    # Root translation
     for key in root.Translation.GetAnimationNode().Nodes[1].FCurve.Keys:
         key.Value -= offset[1]
     
-    for key in pelvis.Translation.GetAnimationNode().Nodes[2].FCurve.Keys:
-        key.Value = offset[1] # Local Z is scene Y
+    # Pelvis translation
+    for i in range(3):
+        for key in pelvis.Translation.GetAnimationNode().Nodes[i].FCurve.Keys:
+            # X
+            if i == 0:
+                key.Value = 0 # Delete - has been transferred to root
+            
+            # Y
+            elif i == 1:
+                
+                # Delete if Z-up, otherwise plot offset
+                if hipZisY.State:
+                    key.Value = 0
+                else:
+                    key.Value = offset[1]
+            
+            # Z
+            else:
+                
+                # Plot offset if Z-up, otherwise delete
+                if hipZisY.State:
+                    key.Value = offset[1]
+                else:
+                    key.Value = 0
 
 
 # Get hierarchy branch
@@ -143,6 +170,8 @@ def _getBranch(topModel):
 # Insert stance pose at frame -1
 def insertStancePose(char, root):
     
+    stanceFrame = FBPlayerControl().LoopStart.GetFrame() - 1
+    
     children = getBranch(root)
     char.InputType = FBCharacterInputType.kFBCharacterInputStance
     char.ActiveInput = True
@@ -151,15 +180,15 @@ def insertStancePose(char, root):
     
     for child in children:
         if child.__class__ is FBModelSkeleton and child.Translation.GetAnimationNode() and child.Rotation.GetAnimationNode():
-            print "setting key for {}".format(child.Name)
-            child.Translation.GetAnimationNode().KeyAdd(FBTime(0,0,0,-1), [child.Translation[0], child.Translation[1], child.Translation[2]])
-            child.Rotation.GetAnimationNode().KeyAdd(FBTime(0,0,0,-1), [child.Rotation[0], child.Rotation[1], child.Rotation[2]])
+            #print "setting key for {}".format(child.Name)
+            child.Translation.GetAnimationNode().KeyAdd(FBTime(0,0,0,stanceFrame), [child.Translation[0], child.Translation[1], child.Translation[2]])
+            child.Rotation.GetAnimationNode().KeyAdd(FBTime(0,0,0,stanceFrame), [child.Rotation[0], child.Rotation[1], child.Rotation[2]])
     
-    root.Translation.GetAnimationNode().KeyAdd(FBTime(0,0,0,-1), [0, 0, 0])
-    root.Rotation.GetAnimationNode().KeyAdd(FBTime(0,0,0,-1), [0, 0, 0])
+    root.Translation.GetAnimationNode().KeyAdd(FBTime(0,0,0,stanceFrame), [0, 0, 0])
+    root.Rotation.GetAnimationNode().KeyAdd(FBTime(0,0,0,stanceFrame), [0, 0, 0])
     
     char.ActiveInput = False
-    FBPlayerControl().LoopStart = FBTime(0,0,0,-1)
+    FBPlayerControl().LoopStart = FBTime(0,0,0,stanceFrame)
 
 
 # Main process
@@ -168,26 +197,31 @@ def processTrack():
     
     # Grab scene references
     root = getSkeletonRoot()
+    if not root:
+        errors += 1
+        return False
+    
     pelvis = getSkeletonPelvis(root)
     char = getCharacterFromRoot(root)
     offset = None
     
     # Find hips offset
-    if root and pelvis and char:
-        offset = getHipsOffset(char)
-    else:
+    if not pelvis or not char:
         errors += 1
         return False
+
+    offset = getHipsOffset(char)
     
     # Process file
     copyAnimation(pelvis, root)
-    invertZTranslation(root)
+    if invertZ.State:
+        invertZTranslation(root)
+
     offsetHipsAndRoot(root, pelvis, offset)
     insertStancePose(char, root)
     
     return True
         
-
 
 # Save file with an appended filename
 def saveAs():
@@ -197,6 +231,7 @@ def saveAs():
 
 # List all FBX files in a directory and process them
 def processFiles():
+    global errors
     openDir = FBFolderPopup()
     openDir.Caption = "Select motion file folder"
     openDir.Path = os.path.dirname(app.FBXFileName)
@@ -204,6 +239,7 @@ def processFiles():
     if openDir.Execute():
         
         # Loop through all files in folder
+        errors = 0
         fileCount = 0
         for file in os.listdir(openDir.Path):
             if file.endswith('.fbx') and append not in file:
@@ -234,7 +270,7 @@ def buttonLoad(control, event):
 ##
 
 def PopulateLayout(mainLyt):
-    global removeToeAnim
+    global removeToeAnim, invertZ
 
     # Vertical box layout
     main = FBVBoxLayout()
@@ -259,6 +295,22 @@ def PopulateLayout(mainLyt):
     box.AddRelative(b, 1.0)
     b.OnClick.Add(buttonLoad)
     main.Add(box, 35)
+    
+    box = FBHBoxLayout(FBAttachType.kFBAttachRight)
+    invertZ.Caption = "Invert Z axis? (for Z-up motion file)"
+    invertZ.Style = FBButtonStyle.kFBCheckbox 
+    invertZ.Justify = FBTextJustify.kFBTextJustifyLeft
+    invertZ.State = True
+    box.AddRelative(invertZ, 1.0)
+    main.Add(box, 20)
+    
+    box = FBHBoxLayout(FBAttachType.kFBAttachRight)
+    hipZisY.Caption = "Treat Hips TZ as TY? (for Z-up character)"
+    hipZisY.Style = FBButtonStyle.kFBCheckbox 
+    hipZisY.Justify = FBTextJustify.kFBTextJustifyLeft
+    hipZisY.State = True
+    box.AddRelative(hipZisY, 1.0)
+    main.Add(box, 15)
 
 
 ##
@@ -270,14 +322,13 @@ def CreateTool():
     global t
     
     # Tool creation will serve as the hub for all other controls
-    name = "iKinema exporter/sanitizer v{0:.2f}".format(version)
+    name = "iKinema exporter v{0:.2f}".format(version)
     t = FBCreateUniqueTool(name)
     t.StartSizeX = 330
-    t.StartSizeY = 210
+    t.StartSizeY = 280
     PopulateLayout(t)
     ShowTool(t)
 
 
 CreateTool()
 #processTrack()
-

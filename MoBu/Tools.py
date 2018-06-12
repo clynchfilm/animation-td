@@ -33,7 +33,7 @@ def getSelectedModels():
     Returns:
         List
     """
-
+    
     modelList = FBModelList()
     FBGetSelectedModels(modelList)
     normalList = []
@@ -43,7 +43,7 @@ def getSelectedModels():
 
 
 def getBranch(topModel):
-     """Return a hierarchy of objects including and below the initial object
+    """Return a hierarchy of objects including and below the initial object
     
     Args:
         topModel (mixed): Scene reference to the intial object to return a hierarchy from (inclusive)
