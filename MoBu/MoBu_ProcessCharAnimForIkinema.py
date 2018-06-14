@@ -270,7 +270,7 @@ def buttonLoad(control, event):
 ##
 
 def PopulateLayout(mainLyt):
-    global removeToeAnim, invertZ
+    global hipZisY, invertZ
 
     # Vertical box layout
     main = FBVBoxLayout()
