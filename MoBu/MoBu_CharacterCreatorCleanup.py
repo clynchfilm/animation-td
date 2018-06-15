@@ -3,7 +3,7 @@ from pyfbsdk_additions import *
 import time
 
 # Version
-version = 0.1
+version = 1.0
 
 # Application references
 app = FBApplication()

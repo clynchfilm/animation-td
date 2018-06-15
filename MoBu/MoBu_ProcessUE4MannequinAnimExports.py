@@ -8,10 +8,12 @@ system = FBSystem()
 scene = system.Scene
 
 # Globals
-version = 0.1
+version = 1.0
 branchCache = []
 append = '_StaticRoot.fbx'
 errors = 0
+forceYup = FBButton()
+trimFrame = FBButton()
 
 # UE4 -> MoBu naming conversion
 naming_template = {
@@ -161,9 +163,12 @@ def tpose():
     FBSystem().Scene.Evaluate()
 
 
-def characterize(name='Mannequin'):
+def characterize(name='Mannequin', includeRoot=True):
     char = FBCharacter(name)
     for joint, link in naming_template.iteritems():
+        if not includeRoot and joint == 'root':
+            continue
+            
         jointRef = FBFindModelByLabelName(joint)
         linkRef = char.PropertyList.Find(link)
 
@@ -172,6 +177,7 @@ def characterize(name='Mannequin'):
 
     char.SetCharacterizeOn(True)
     scene.Evaluate()
+    return char
 
 
 def getSkeletonPelvis(root):
@@ -201,25 +207,15 @@ def setTimeline(startFrame = 1):
 # Main process
 def processTrack():
     global errors
+
+    # Set playback to 24fps
+    FBPlayerControl().SetTransportFps(FBTimeMode.kFBTimeMode24Frames)
+    FBPlayerControl().SnapMode = FBTransportSnapMode.kFBTransportSnapModeSnapAndPlayOnFrames
     
     # T pose and characterize the mannequin
-    tpose()
-    characterize(name='Mannequin')
+    #tpose()
+    #char = characterize()
 
-    # Bake to static root node
-    root = getSkeletonRoot()
-    if not root:
-        errors += 1
-        return False
-    
-    pelvis = getSkeletonPelvis(root)
-    if not pelvis:
-        errors += 1
-        return False
-            
-    #cloneRoot = root.Clone()
-    clonePelvis = pelvis.Clone()
-    
     # Plot options
     options = FBPlotOptions()
     options.PlotAllTakes = False
@@ -228,7 +224,20 @@ def processTrack():
     options.UseConstantKeyReducer = False
     options.PlotTranslationOnRootOnly = False
     
-    # Constraint and plot (cache pelvis)
+    # Grab skeleton root reference
+    root = getSkeletonRoot()
+    if not root:
+        errors += 1
+        return False
+    
+    # Grab pelvis reference
+    pelvis = getSkeletonPelvis(root)
+    if not pelvis:
+        errors += 1
+        return False
+    
+    # Clone and cache the current pelvis movement
+    clonePelvis = pelvis.Clone()
     mgr = FBConstraintManager()
     con = mgr.TypeCreateConstraint(3) #parent/child
     con.ReferenceAdd(0, clonePelvis)
@@ -242,10 +251,17 @@ def processTrack():
     clonePelvis.Selected = False
     con.FBDelete()
     
-    # Delete keys on root
+    # Delete keys on root (aka static root at origin)
+    # Don't re-align the root here, which would have made sense. Leave it at Z-up
+    firstFrame = FBPlayerControl().LoopStart.GetFrame()
     for i in range(3):
         root.Translation.GetAnimationNode().Nodes[i].FCurve = FBFCurve()
         root.Rotation.GetAnimationNode().Nodes[i].FCurve = FBFCurve()
+    
+    root.Translation.GetAnimationNode().KeyAdd(FBTime(0,0,0,firstFrame), [0, 0, 0])
+    #if forceYup.State:
+    #    root.Translation.GetAnimationNode().KeyAdd(FBTime(0,0,0,firstFrame), [0, 0, 0])
+    #    root.Rotation.GetAnimationNode().KeyAdd(FBTime(0,0,0,firstFrame), [90, 0, 0])
     
     # Constrain pelvis to cached data and plot
     mgr = FBConstraintManager()
@@ -253,22 +269,23 @@ def processTrack():
     con.ReferenceAdd(0, pelvis)
     con.ReferenceAdd(1, clonePelvis)
     con.Weight = 100
+    #con.Snap()
     con.Active = True
     
     pelvis.Selected = True
-    root.Selected = True
+    #root.Selected = True
     system.CurrentTake.PlotTakeOnSelected(options)
     con.Active = False
     pelvis.Selected = False
-    root.Selected = False
+    #root.Selected = False
     con.FBDelete()
     clonePelvis.FBDelete()
     
     # Set the timeline range
-    setTimeline()
-
+    if trimFrame.State:
+        setTimeline()
+    
     return True
-        
 
 
 # Save file with an appended filename
@@ -343,6 +360,14 @@ def PopulateLayout(mainLyt):
     b.OnClick.Add(buttonLoad)
     main.Add(box, 35)
 
+    box = FBHBoxLayout(FBAttachType.kFBAttachRight)
+    trimFrame.Caption = "Trim/hide the first frame (Tpose)?"
+    trimFrame.Style = FBButtonStyle.kFBCheckbox 
+    trimFrame.Justify = FBTextJustify.kFBTextJustifyLeft
+    trimFrame.State = True
+    box.AddRelative(trimFrame, 1.0)
+    main.Add(box, 20)
+
 
 ##
 ## CREATE THE TOOL REGISTRATION IN MOBU. THIS IS ALSO WHERE WE CAN
@@ -356,7 +381,7 @@ def CreateTool():
     name = "UE4 mannequin importer/sanitizer v{0:.2f}".format(version)
     t = FBCreateUniqueTool(name)
     t.StartSizeX = 330
-    t.StartSizeY = 190
+    t.StartSizeY = 215
     PopulateLayout(t)
     ShowTool(t)
 

@@ -3,8 +3,8 @@ from pyfbsdk_additions import *
 import pickle, time, sys, os, telnetlib
 
 
-localPath = r"M:"
-remoteIP = "192.168.0.2"
+localPath = r"<PATH>"
+remoteIP = "<IP>"
 #remotePath = r"C:"
 
 editLocal = FBEdit()
@@ -24,16 +24,6 @@ def browseLocal(control, event):
         localPath = lFp.Path
 
 
-#def browseRemote(control, event):
-#    lFp = FBFolderPopup()
-#    lFp.Caption = "Select the remote path"
-#    lFp.Path = remotePath
-#    lRes = lFp.Execute()
-#    
-#    if lRes:
-#        editRemote.Text = lFp.Path
-    
-
 def getSelection():
     modelList = FBModelList()
     FBGetSelectedModels(modelList)
@@ -48,11 +38,6 @@ def localPathChange(control, event):
 def remoteIPChange(control, event):
     global remoteIP
     remoteIP = editLocal.Text
-    
-
-#def remotePathChange(control, event):
-#    global remotePath
-#    remotePath = editRemote.Text
 
 
 def buttonSave(control, event):
@@ -175,20 +160,6 @@ def PopulateLayout(mainLyt):
     box.Add(b, 50)
     b.OnClick.Add(browseLocal)
     main.Add(box, 25)
-    
-    #box = FBHBoxLayout(FBAttachType.kFBAttachLeft)
-    #label = FBLabel()
-    #label.Caption = "Remote path:"
-    #box.Add(label, 70)
-    #editRemote.Text = remotePath
-    #editRemote.OnChange.Add(remotePathChange)
-    #box.AddRelative(editRemote, 1.0)
-    #b = FBButton()
-    #b.Caption = "Browse"
-    #b.Justify = FBTextJustify.kFBTextJustifyCenter
-    #box.Add(b, 50)
-    #b.OnClick.Add(browseRemote)
-    #main.Add(box, 25)
     
     box = FBHBoxLayout(FBAttachType.kFBAttachLeft)
     label = FBLabel()

@@ -8,7 +8,48 @@ Dependencies:
 from pyfbsdk import *
 
 # Globals
-branchCache = []
+_branchCache = []
+
+
+# Relaxed hand pose for CC character asset with UE4 joint names
+relaxedHand = {
+    'thumb_03':  (-0.00970255, 0.00255607, 12.8602),
+    'thumb_02':  (0.308848, -0.456095, 29.1932),
+    'thumb_01':  (105.923, 35.3478, 26.4534),
+    'index_03':  (0.0934565, 0.00371054, 10),
+    'index_02':  (-0.0604674,-0.011919,15),
+    'index_01':  (-1.67723, -6.36291, 10),
+    'middle_03': (0.0313126, 0.0350174, 15),
+    'middle_02': (-0.0140295, 0.00662739, 15),
+    'middle_01': (-1.74336, -6.42268, 10),
+    'ring_03':   (-0.890617, 0.215132, 8),
+    'ring_02':   (0.974072, -0.303844, 15),
+    'ring_01':   (-1.7408, -6.36999, 15),
+    'pinky_03':  (0.0489517, -0.106998, 10),
+    'pinky_02':  (-0.0568799, -0.0799786, 20),
+    'pinky_01':  (-3.91729, -5.51941, 15)
+}
+
+
+# The types of constraints MoBu can create
+constraints = {
+    'aim':  0,
+    'expression':  1,
+    'multi_referential':  2,
+    'parent':  3,
+    'path':  4,
+    'position':  5,
+    'range':  6,
+    'relation':  7,
+    'rigid_body':  8,
+    '3_points':  9,
+    'rotation':  10,
+    'scale':  11,
+    'mapping':  12,
+    'chain_ik':  13,
+    'spline_ik':  14
+}
+
 
 
 def deselectAll():
@@ -52,18 +93,18 @@ def getBranch(topModel):
         List
     """
 
-    global branchCache
-    branchCache = []
+    global _branchCache
+    _branchCache = []
     _getBranch(topModel)
-    return branchCache
+    return _branchCache
 
 # Private member function. Do not call directly
 def _getBranch(topModel):
-    global branchCache
+    global _branchCache
     for childModel in topModel.Children:
         _getBranch(childModel)
 
-    branchCache.append(topModel)
+    _branchCache.append(topModel)
 
 
 def getSkeletonPelvis(root, name='pelvis'):
@@ -122,7 +163,7 @@ def parentConstraint(child, parent, name='', weight=100, snap=False):
     """
 
     mgr = FBConstraintManager()
-    con = mgr.TypeCreateConstraint(3) # 3 = parent/child
+    con = mgr.TypeCreateConstraint(constraints['parent']) # 3 = parent/child
     con.ReferenceAdd(0, child)
     con.ReferenceAdd(1, parent)
     con.Weight = weight
@@ -206,3 +247,37 @@ def insertStancePose(char, root, frame=-1, trimTimeline=True):
 
     if trimTimeline:
         FBPlayerControl().LoopStart = FBTime(0,0,0,stanceFrame)
+
+
+def listConnections(models):
+    """List all in/out connections for the supplied list of models. Prints to stdout, use for debug only
+    
+    Args:
+        models (list): A list of scene references to the target objects
+    """
+    
+    for model in models:
+        
+        print ""
+        
+        # Sources
+        print "SOURCE CONNECTIONS for {}:".format(model.Name)
+        for src in range(model.GetSrcCount()):
+            src_obj = model.GetSrc(src)
+            print "    {}: {}".format(src_obj.Name, src_obj)
+        
+        # Destinations
+        print ""
+        print "DESTINATION CONNECTIONS for {}:".format(model.Name)
+        for dst in range(model.GetDstCount()):
+            dst_obj = model.GetDst(dst)
+            print "    {}: {}".format(dst_obj.Name, dst_obj)
+        
+        # Inheritance
+        print ""
+        print "INHERITANCE for {}:".format(model.Name)
+        print "    Parent: {}".format(model.Parent)
+        children = []
+        for child in model.Children:
+            children.append(child.Name)
+        print "    Children ({}): {}".format(len(model.Children), ', '.join(children))

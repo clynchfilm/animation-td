@@ -26,12 +26,11 @@ plotOptions = FBPlotOptions()
 plotOptions.ConstantKeyReducerKeepOneKey = True
 plotOptions.PlotAllTakes = False
 plotOptions.PlotOnFrame = True
-plotOptions.PlotPeriod = FBTime(0, 0, 0, 1, FBTimeMode.kFBTimeMode24Frames)
+plotOptions.PlotPeriod = FBTime(0, 0, 0, 1)
 plotOptions.PlotTranslationOnRootOnly = True
 plotOptions.PreciseTimeDiscontinuities = True
 plotOptions.RotationFilterToApply = FBRotationFilter.kFBRotationFilterUnroll
 plotOptions.UseConstantKeyReducer = True
-
 
    
 def FindLimits( pNode, pLLimit=None, pRLimit=None ):
@@ -762,7 +761,7 @@ def CreateTool():
     global t
     
     # Tool creation will serve as the hub for all other controls
-    name = "Motion Edit Tools v{0:.2f}".format(version)
+    name = "MotionEdit Toolkit v{0:.2f}".format(version)
     t = FBCreateUniqueTool(name)
     t.StartSizeX = 350
     t.StartSizeY = 560

@@ -8,9 +8,11 @@ system = FBSystem()
 scene = system.Scene
 
 # Globals
-version = 0.1
+version = 1.0
 append = '_StaticRoot.fbx'
 errors = 0
+forceYup = FBButton()
+trimFrame = FBButton()
 
 
 def getSkeletonPelvis(root):
@@ -38,19 +40,12 @@ def setTimeline(startFrame = 1):
 
 
 def processTrack():
-    root = getSkeletonRoot()
-    if not root:
-        errors += 1
-        return False
+    global errors
     
-    pelvis = getSkeletonPelvis(root)
-    if not pelvis:
-        errors += 1
-        return False
-            
-    #cloneRoot = root.Clone()
-    clonePelvis = pelvis.Clone()
-    
+    # Set playback to 24fps
+    FBPlayerControl().SetTransportFps(FBTimeMode.kFBTimeMode24Frames)
+    FBPlayerControl().SnapMode = FBTransportSnapMode.kFBTransportSnapModeSnapAndPlayOnFrames
+
     # Plot options
     options = FBPlotOptions()
     options.PlotAllTakes = False
@@ -59,7 +54,20 @@ def processTrack():
     options.UseConstantKeyReducer = False
     options.PlotTranslationOnRootOnly = False
     
-    # Constraint and plot (cache pelvis)
+    # Grab skeleton root reference
+    root = getSkeletonRoot()
+    if not root:
+        errors += 1
+        return False
+    
+    # Grab pelvis reference
+    pelvis = getSkeletonPelvis(root)
+    if not pelvis:
+        errors += 1
+        return False
+    
+    # Clone and cache the current pelvis movement
+    clonePelvis = pelvis.Clone()
     mgr = FBConstraintManager()
     con = mgr.TypeCreateConstraint(3) #parent/child
     con.ReferenceAdd(0, clonePelvis)
@@ -73,10 +81,17 @@ def processTrack():
     clonePelvis.Selected = False
     con.FBDelete()
     
-    # Delete keys on root
+    # Delete keys on root (aka static root at origin)
+    # Don't re-align the root here, which would have made sense. Leave it at Z-up
+    firstFrame = FBPlayerControl().LoopStart.GetFrame()
     for i in range(3):
         root.Translation.GetAnimationNode().Nodes[i].FCurve = FBFCurve()
         root.Rotation.GetAnimationNode().Nodes[i].FCurve = FBFCurve()
+    
+    root.Translation.GetAnimationNode().KeyAdd(FBTime(0,0,0,firstFrame), [0, 0, 0])
+    #if forceYup.State:
+    #    root.Translation.GetAnimationNode().KeyAdd(FBTime(0,0,0,firstFrame), [0, 0, 0])
+    #    root.Rotation.GetAnimationNode().KeyAdd(FBTime(0,0,0,firstFrame), [90, 0, 0])
     
     # Constrain pelvis to cached data and plot
     mgr = FBConstraintManager()
@@ -84,19 +99,39 @@ def processTrack():
     con.ReferenceAdd(0, pelvis)
     con.ReferenceAdd(1, clonePelvis)
     con.Weight = 100
+    #con.Snap()
     con.Active = True
     
     pelvis.Selected = True
-    root.Selected = True
+    #root.Selected = True
     system.CurrentTake.PlotTakeOnSelected(options)
     con.Active = False
     pelvis.Selected = False
-    root.Selected = False
+    #root.Selected = False
     con.FBDelete()
     clonePelvis.FBDelete()
     
+    # If forcing Y-up from Z-up:
+    # Invert original Y (new Z), then swap Y and Z
+    # Need to cache the original FCurves because FBFCurve() doesn't have a useful copy-constructor
+    if forceYup.State:
+        clonePelvis = pelvis.Clone() # cache
+        x = clonePelvis.Translation.GetAnimationNode().Nodes[0].FCurve
+        y = clonePelvis.Translation.GetAnimationNode().Nodes[1].FCurve
+        z = clonePelvis.Translation.GetAnimationNode().Nodes[2].FCurve
+        
+        # Invert Y
+        for key in clonePelvis.Translation.GetAnimationNode().Nodes[1].FCurve.Keys:
+            key.Value = abs(key.Value) if key.Value < 0 else key.Value * -1
+        
+        pelvis.Translation.GetAnimationNode().Nodes[1].FCurve = z
+        pelvis.Translation.GetAnimationNode().Nodes[2].FCurve = y
+        
+        clonePelvis.FBDelete()
+    
     # Set the timeline range
-    setTimeline()
+    if trimFrame.State:
+        setTimeline()
     
     return True
 
@@ -148,7 +183,7 @@ def buttonLoad(control, event):
 ##
 
 def PopulateLayout(mainLyt):
-    global removeToeAnim, invertZ
+    global forceYup, trimFrame
 
     # Vertical box layout
     main = FBVBoxLayout()
@@ -174,6 +209,22 @@ def PopulateLayout(mainLyt):
     b.OnClick.Add(buttonLoad)
     main.Add(box, 35)
 
+    box = FBHBoxLayout(FBAttachType.kFBAttachRight)
+    forceYup.Caption = "Force Y-up for root node?"
+    forceYup.Style = FBButtonStyle.kFBCheckbox 
+    forceYup.Justify = FBTextJustify.kFBTextJustifyLeft
+    forceYup.State = True
+    box.AddRelative(forceYup, 1.0)
+    main.Add(box, 20)
+
+    box = FBHBoxLayout(FBAttachType.kFBAttachRight)
+    trimFrame.Caption = "Trim/hide the first frame (Tpose)?"
+    trimFrame.Style = FBButtonStyle.kFBCheckbox 
+    trimFrame.Justify = FBTextJustify.kFBTextJustifyLeft
+    trimFrame.State = False
+    box.AddRelative(trimFrame, 1.0)
+    main.Add(box, 20)
+
 
 ##
 ## CREATE THE TOOL REGISTRATION IN MOBU. THIS IS ALSO WHERE WE CAN
@@ -187,7 +238,7 @@ def CreateTool():
     name = "iKinema importer/normalizer v{0:.2f}".format(version)
     t = FBCreateUniqueTool(name)
     t.StartSizeX = 330
-    t.StartSizeY = 190
+    t.StartSizeY = 220
     PopulateLayout(t)
     ShowTool(t)
 

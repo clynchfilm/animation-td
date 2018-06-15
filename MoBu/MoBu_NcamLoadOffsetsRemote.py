@@ -1,7 +1,7 @@
 from pyfbsdk import *
 import sys, pickle
 
-filePickle = "M:\\ncamoffsets.pickle"
+filePickle = "<PATH>\\ncamoffsets.pickle"
 try:
     with open(filePickle, 'rb') as handle:
         pickleMatrices = pickle.load(handle)

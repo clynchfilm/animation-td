@@ -4,7 +4,7 @@ import os
 
 
 # Version
-version = 0.1
+version = 1.0
 
 # Globals
 app = FBApplication()
@@ -155,7 +155,6 @@ def PopulateLayout(mainLyt):
     box.AddRelative(b, 1.0)
     b.OnClick.Add(buttonCheck1)
     main.Add(box, 25)
-    
     
     box = FBHBoxLayout(FBAttachType.kFBAttachRight)
     b = FBButton()

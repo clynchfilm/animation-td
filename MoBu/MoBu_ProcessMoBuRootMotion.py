@@ -8,12 +8,34 @@ system = FBSystem()
 scene = system.Scene
 
 # Globals
-version = 0.1
+version = 1.0
 branchCache = []
 append = '_RootMotion.fbx'
 errors = 0
 invertZ = FBButton()
 hipZisY = FBButton()
+deleteUnwanted = FBButton()
+unwantedJoints = [ 
+        "CC_Base_R_UpperarmTwist02", 
+        "CC_Base_L_UpperarmTwist02", 
+        "CC_Base_R_RibsTwist", 
+        "CC_Base_R_Breast", 
+        "CC_Base_L_RibsTwist", 
+        "CC_Base_L_Breast", 
+        "CC_Base_L_Ribs", 
+        "CC_Base_R_Ribs", 
+        "CC_Base_Tongue01", 
+        "CC_Base_Tongue02", 
+        "CC_Base_Tongue03", 
+        "CC_Base_Teeth02", 
+        "CC_Base_UpperJaw", 
+        "CC_Base_Teeth01", 
+        "CC_Base_L_ThighTwist02", 
+        "CC_Base_L_CalfTwist02", 
+        "CC_Base_R_ThighTwist02", 
+        "CC_Base_R_CalfTwist02", 
+        "CC_Base_Pelvis"
+    ]
 
 
 # Get Translation offset for pelvis/hips node, in relation to the root/reference
@@ -29,6 +51,11 @@ def getHipsOffset(char):
 
 # Copy animation curves from source to destination (pelvis to root)
 def copyAnimation(src, dst):   
+    
+    # Set playback to 24fps
+    FBPlayerControl().SetTransportFps(FBTimeMode.kFBTimeMode24Frames)
+    #FBPlayerControl().SetTransportFps(FBTimeMode.kFBTimeMode30Frames)
+    FBPlayerControl().SnapMode = FBTransportSnapMode.kFBTransportSnapModeSnapAndPlayOnFrames
     
     # Plot options
     options = FBPlotOptions()
@@ -219,6 +246,18 @@ def processTrack():
 
     offsetHipsAndRoot(root, pelvis, offset)
     insertStancePose(char, root)
+
+    # Delete unwanted bones, if requested
+    if deleteUnwanted.State:
+        toDelete = []
+        for comp in scene.Components:
+            if comp.Name in unwantedJoints:
+                toDelete.append(comp)
+        
+        if len(toDelete) > 0:
+            for i in range(len(toDelete), 0, -1):
+                x = i-1
+                toDelete[x].FBDelete()
     
     return True
         
@@ -270,7 +309,7 @@ def buttonLoad(control, event):
 ##
 
 def PopulateLayout(mainLyt):
-    global hipZisY, invertZ
+    global hipZisY, invertZ, deleteUnwanted
 
     # Vertical box layout
     main = FBVBoxLayout()
@@ -283,10 +322,10 @@ def PopulateLayout(mainLyt):
     mainLyt.SetControl("main", main)
     
     l = FBLabel()
-    l.Caption = "This script prompts you for a path to your animation exports, then proceeds to process all matching fbx files in that directory. \n\nEach file MUST have been saved as a selection, in order to retain the character definition (used to find hips offset)"
+    l.Caption = "This script prompts you for a path to your animation exports, then proceeds to process all matching fbx files in that directory. \n\nEach file MUST have been saved as a selection, in order to retain the character definition (used to find hips offset).\n\nDO NOT USE THIS SCRIPT FOR PARENTED CHARACTERS (AKA DRIVING CARS, ETC)"
     l.WordWrap = True
     l.Justify = FBTextJustify.kFBTextJustifyLeft
-    main.Add(l, 110)
+    main.Add(l, 130)
  
     box = FBHBoxLayout(FBAttachType.kFBAttachRight)
     b = FBButton()
@@ -297,10 +336,18 @@ def PopulateLayout(mainLyt):
     main.Add(box, 35)
     
     box = FBHBoxLayout(FBAttachType.kFBAttachRight)
+    deleteUnwanted.Caption = "Delete unwanted animation bones (Nubs, etc)?"
+    deleteUnwanted.Style = FBButtonStyle.kFBCheckbox 
+    deleteUnwanted.Justify = FBTextJustify.kFBTextJustifyLeft
+    deleteUnwanted.State = True
+    box.AddRelative(deleteUnwanted, 1.0)
+    main.Add(box, 20)
+
+    box = FBHBoxLayout(FBAttachType.kFBAttachRight)
     invertZ.Caption = "Invert Z axis? (for Z-up motion file)"
     invertZ.Style = FBButtonStyle.kFBCheckbox 
     invertZ.Justify = FBTextJustify.kFBTextJustifyLeft
-    invertZ.State = True
+    invertZ.State = False
     box.AddRelative(invertZ, 1.0)
     main.Add(box, 20)
     
@@ -308,7 +355,7 @@ def PopulateLayout(mainLyt):
     hipZisY.Caption = "Treat Hips TZ as TY? (for Z-up character)"
     hipZisY.Style = FBButtonStyle.kFBCheckbox 
     hipZisY.Justify = FBTextJustify.kFBTextJustifyLeft
-    hipZisY.State = True
+    hipZisY.State = False
     box.AddRelative(hipZisY, 1.0)
     main.Add(box, 15)
 
@@ -325,7 +372,7 @@ def CreateTool():
     name = "iKinema exporter v{0:.2f}".format(version)
     t = FBCreateUniqueTool(name)
     t.StartSizeX = 330
-    t.StartSizeY = 280
+    t.StartSizeY = 320
     PopulateLayout(t)
     ShowTool(t)
 
