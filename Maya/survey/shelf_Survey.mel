@@ -1,4 +1,4 @@
-global proc shelf_SURVEY () {
+global proc shelf_Survey () {
     global string $gBuffStr;
     global string $gBuffStr0;
     global string $gBuffStr1;
@@ -6,14 +6,17 @@ global proc shelf_SURVEY () {
 
     shelfButton
         -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
         -enable 1
         -width 35
-        -height 35
+        -height 34
         -manage 1
         -visible 1
         -preventOverride 0
         -annotation "Group selection" 
         -enableBackground 0
+        -backgroundColor 0 0 0 
         -highlightColor 0.321569 0.521569 0.65098 
         -align "center" 
         -label "Group selection" 
@@ -38,14 +41,17 @@ global proc shelf_SURVEY () {
     ;
     shelfButton
         -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
         -enable 1
         -width 35
-        -height 35
+        -height 34
         -manage 1
         -visible 1
         -preventOverride 0
         -annotation "Group Trackingmarkers" 
         -enableBackground 0
+        -backgroundColor 0 0 0 
         -highlightColor 0.321569 0.521569 0.65098 
         -align "center" 
         -label "Group trackingmarkers" 
@@ -70,14 +76,17 @@ global proc shelf_SURVEY () {
     ;
     shelfButton
         -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
         -enable 1
         -width 35
-        -height 35
+        -height 34
         -manage 1
         -visible 1
         -preventOverride 0
         -annotation "Draw path" 
         -enableBackground 0
+        -backgroundColor 0 0 0 
         -highlightColor 0.321569 0.521569 0.65098 
         -align "center" 
         -label "Create open path" 
@@ -102,14 +111,17 @@ global proc shelf_SURVEY () {
     ;
     shelfButton
         -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
         -enable 1
         -width 35
-        -height 35
+        -height 34
         -manage 1
         -visible 1
         -preventOverride 0
         -annotation "Draw path & hide selection" 
         -enableBackground 0
+        -backgroundColor 0 0 0 
         -highlightColor 0.321569 0.521569 0.65098 
         -align "center" 
         -label "Create open path & hide selection" 
@@ -134,14 +146,17 @@ global proc shelf_SURVEY () {
     ;
     shelfButton
         -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
         -enable 1
         -width 35
-        -height 35
+        -height 34
         -manage 1
         -visible 1
         -preventOverride 0
         -annotation "Draw closed path" 
         -enableBackground 0
+        -backgroundColor 0 0 0 
         -highlightColor 0.321569 0.521569 0.65098 
         -align "center" 
         -label "Create closed path" 
@@ -166,14 +181,17 @@ global proc shelf_SURVEY () {
     ;
     shelfButton
         -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
         -enable 1
         -width 35
-        -height 35
+        -height 34
         -manage 1
         -visible 1
         -preventOverride 0
         -annotation "Draw closed path & hide selection" 
         -enableBackground 0
+        -backgroundColor 0 0 0 
         -highlightColor 0.321569 0.521569 0.65098 
         -align "center" 
         -label "Create closed path & hide selection" 
@@ -198,14 +216,17 @@ global proc shelf_SURVEY () {
     ;
     shelfButton
         -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
         -enable 1
         -width 35
-        -height 35
+        -height 34
         -manage 1
         -visible 1
         -preventOverride 0
         -annotation "Complete the 4th point in a rectangle" 
         -enableBackground 0
+        -backgroundColor 0 0 0 
         -highlightColor 0.321569 0.521569 0.65098 
         -align "center" 
         -label "Complete rectangle" 
@@ -230,14 +251,17 @@ global proc shelf_SURVEY () {
     ;
     shelfButton
         -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
         -enable 1
         -width 35
-        -height 35
+        -height 34
         -manage 1
         -visible 1
         -preventOverride 0
         -annotation "Make ARC (and leave locators visible)" 
         -enableBackground 0
+        -backgroundColor 0 0 0 
         -highlightColor 0.321569 0.521569 0.65098 
         -align "center" 
         -label "3 point ARC" 
@@ -262,14 +286,17 @@ global proc shelf_SURVEY () {
     ;
     shelfButton
         -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
         -enable 1
         -width 35
-        -height 35
+        -height 34
         -manage 1
         -visible 1
         -preventOverride 0
         -annotation "Make CIRCLE (and hide locators)" 
         -enableBackground 0
+        -backgroundColor 0 0 0 
         -highlightColor 0.321569 0.521569 0.65098 
         -align "center" 
         -label "3 point CIRCLE" 
@@ -294,14 +321,17 @@ global proc shelf_SURVEY () {
     ;
     shelfButton
         -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
         -enable 1
         -width 35
-        -height 35
+        -height 34
         -manage 1
         -visible 1
         -preventOverride 0
         -annotation "Duplicate selected objects" 
         -enableBackground 0
+        -backgroundColor 0 0 0 
         -highlightColor 0.321569 0.521569 0.65098 
         -align "center" 
         -label "Duplicate selected" 
@@ -326,14 +356,17 @@ global proc shelf_SURVEY () {
     ;
     shelfButton
         -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
         -enable 1
         -width 35
-        -height 35
+        -height 34
         -manage 1
         -visible 1
         -preventOverride 0
         -annotation "Add to \"dollytracks_etc\" layer" 
         -enableBackground 0
+        -backgroundColor 0 0 0 
         -highlightColor 0.321569 0.521569 0.65098 
         -align "center" 
         -label "editDisplayLayerMembers -noRecurse dollytracks_etc `ls -selectio..." 
@@ -358,14 +391,17 @@ global proc shelf_SURVEY () {
     ;
     shelfButton
         -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
         -enable 1
         -width 35
-        -height 35
+        -height 34
         -manage 1
         -visible 1
         -preventOverride 0
         -annotation "Add to \"camera\" layer" 
         -enableBackground 0
+        -backgroundColor 0 0 0 
         -highlightColor 0.321569 0.521569 0.65098 
         -align "center" 
         -label "editDisplayLayerMembers -noRecurse camera `ls -selection`;" 
@@ -390,14 +426,17 @@ global proc shelf_SURVEY () {
     ;
     shelfButton
         -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
         -enable 1
         -width 35
-        -height 35
+        -height 34
         -manage 1
         -visible 1
         -preventOverride 0
         -annotation "Add to \"bluescreens\" layer" 
         -enableBackground 0
+        -backgroundColor 0 0 0 
         -highlightColor 0.321569 0.521569 0.65098 
         -align "center" 
         -label "bluescreens layer" 
@@ -422,14 +461,17 @@ global proc shelf_SURVEY () {
     ;
     shelfButton
         -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
         -enable 1
         -width 35
-        -height 35
+        -height 34
         -manage 1
         -visible 1
         -preventOverride 0
         -annotation "Add to \"tracking markers\" layer" 
         -enableBackground 0
+        -backgroundColor 0 0 0 
         -highlightColor 0.321569 0.521569 0.65098 
         -align "center" 
         -label "editDisplayLayerMembers -noRecurse tracking_markers `ls -selection`;" 
@@ -454,14 +496,17 @@ global proc shelf_SURVEY () {
     ;
     shelfButton
         -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
         -enable 1
         -width 35
-        -height 35
+        -height 34
         -manage 1
         -visible 1
         -preventOverride 0
         -annotation "Add to \"HDRI\" layer" 
         -enableBackground 0
+        -backgroundColor 0 0 0 
         -highlightColor 0.321569 0.521569 0.65098 
         -align "center" 
         -label "editDisplayLayerMembers -noRecurse hdri `ls -selection`;" 
@@ -486,14 +531,17 @@ global proc shelf_SURVEY () {
     ;
     shelfButton
         -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
         -enable 1
         -width 35
-        -height 35
+        -height 34
         -manage 1
         -visible 1
         -preventOverride 0
         -annotation "Add to \"groundplanes\" layer" 
         -enableBackground 0
+        -backgroundColor 0 0 0 
         -highlightColor 0.321569 0.521569 0.65098 
         -align "center" 
         -label "editDisplayLayerMembers -noRecurse groundplanes `ls -selection`;" 
@@ -518,14 +566,17 @@ global proc shelf_SURVEY () {
     ;
     shelfButton
         -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
         -enable 1
         -width 35
-        -height 35
+        -height 34
         -manage 1
         -visible 1
         -preventOverride 0
         -annotation "Add to \"setpieces\" layer" 
         -enableBackground 0
+        -backgroundColor 0 0 0 
         -highlightColor 0.321569 0.521569 0.65098 
         -align "center" 
         -label "editDisplayLayerMembers -noRecurse setpieces `ls -selection`;" 
@@ -550,14 +601,17 @@ global proc shelf_SURVEY () {
     ;
     shelfButton
         -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
         -enable 1
         -width 35
-        -height 35
+        -height 34
         -manage 1
         -visible 1
         -preventOverride 0
         -annotation "Add to \"characters\" layer" 
         -enableBackground 0
+        -backgroundColor 0 0 0 
         -highlightColor 0.321569 0.521569 0.65098 
         -align "center" 
         -label "editDisplayLayerMembers -noRecurse characters `ls -selection`;" 
@@ -582,14 +636,17 @@ global proc shelf_SURVEY () {
     ;
     shelfButton
         -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
         -enable 1
         -width 35
-        -height 35
+        -height 34
         -manage 1
         -visible 1
         -preventOverride 0
         -annotation "Add to \"slates\" layer" 
         -enableBackground 0
+        -backgroundColor 0 0 0 
         -highlightColor 0.321569 0.521569 0.65098 
         -align "center" 
         -label "editDisplayLayerMembers -noRecurse slates `ls -selection`;" 
@@ -614,14 +671,17 @@ global proc shelf_SURVEY () {
     ;
     shelfButton
         -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
         -enable 1
         -width 35
-        -height 35
+        -height 34
         -manage 1
         -visible 1
         -preventOverride 0
         -annotation "Add to \"ligths\" layer" 
         -enableBackground 0
+        -backgroundColor 0 0 0 
         -highlightColor 0.321569 0.521569 0.65098 
         -align "center" 
         -label "lights layer" 
@@ -646,14 +706,17 @@ global proc shelf_SURVEY () {
     ;
     shelfButton
         -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
         -enable 1
         -width 35
-        -height 35
+        -height 34
         -manage 1
         -visible 1
         -preventOverride 0
         -annotation "Create display layers" 
         -enableBackground 0
+        -backgroundColor 0 0 0 
         -highlightColor 0.321569 0.521569 0.65098 
         -align "center" 
         -label "Create layers" 
@@ -678,46 +741,17 @@ global proc shelf_SURVEY () {
     ;
     shelfButton
         -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
         -enable 1
         -width 35
-        -height 35
+        -height 34
         -manage 1
         -visible 1
         -preventOverride 0
-        -annotation "Import Total Station Data" 
+        -annotation "Import TotalStation Data" 
         -enableBackground 0
-        -highlightColor 0.321569 0.521569 0.65098 
-        -align "center" 
-        -label "Import TotalStation data" 
-        -labelOffset 0
-        -rotation 0
-        -flipX 0
-        -flipY 0
-        -useAlpha 1
-        -font "plainLabelFont" 
-        -imageOverlayLabel "IMPORT" 
-        -overlayLabelColor 0.8 0.8 0.8 
-        -overlayLabelBackColor 0 0 0 0.5 
-        -image "commandButton.png" 
-        -image1 "commandButton.png" 
-        -style "iconOnly" 
-        -marginWidth 1
-        -marginHeight 1
-        -command "source importTotalStation.mel;\nimportTotalStationGUI();" 
-        -sourceType "mel" 
-        -commandRepeatable 1
-        -flat 1
-    ;
-    shelfButton
-        -enableCommandRepeat 1
-        -enable 1
-        -width 35
-        -height 35
-        -manage 1
-        -visible 1
-        -preventOverride 0
-        -annotation "New Import TotalStation data script" 
-        -enableBackground 0
+        -backgroundColor 0 0 0 
         -highlightColor 0.321569 0.521569 0.65098 
         -align "center" 
         -label "IMPORT" 
