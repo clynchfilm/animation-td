@@ -17,6 +17,7 @@ class TotalStation(object):
     presets['cm'] = Preset('Centimetres', 1, 0.05, 2)
     presets['custom'] = Preset('Custom/user', 0, 0, 3)
     currentPreset = 'm'
+    currentDelimeter = 'Tabs'
     version = 1.0
     winID = 'totalstation'
     winLabel = 'Import Total Station Data (v{})'.format(version)
@@ -39,6 +40,9 @@ class TotalStation(object):
 
         if cmds.optionVar(exists='TS_locScale'):
             self.presets['custom'].locScale = cmds.optionVar(q='TS_locScale')
+
+        if cmds.optionVar(exists='TS_delimeter'):
+            self.currentDelimeter = cmds.optionVar(q='TS_delimeter')
 
         if cmds.optionVar(exists='TS_dataFile'):
            self.dataFile = cmds.optionVar(q='TS_dataFile')
@@ -76,6 +80,16 @@ class TotalStation(object):
         cmds.menuItem(label=self.presets['cm'].name)
         cmds.menuItem(label=self.presets['custom'].name)
         cmds.optionMenu(self.presetField, edit=True, select=self.presets[self.currentPreset].menuOrder)
+
+        # Data delimiter
+        cmds.columnLayout(parent=self.window, columnOffset=('left', 58))
+        self.delimiterField = cmds.optionMenu(label='Value delimiter', width=193, changeCommand=partial(self.dropDownChange2))
+        cmds.menuItem(label='Tabs')
+        cmds.menuItem(label='Comma')
+        if self.currentDelimeter == 'Tabs':
+            cmds.optionMenu(self.delimiterField, edit=True, select=1)
+        else:
+            cmds.optionMenu(self.delimiterField, edit=True, select=2)
 
         # Scale factor & locator scale
         cmds.columnLayout(parent=self.window)
@@ -140,11 +154,12 @@ class TotalStation(object):
                     continue
                 
                 # Split out our objects
-                objects = _line.split("\t")
+                delimeter = "\t" if self.currentDelimeter.lower() == 'tabs' else ","
+                objects = _line.split(delimeter)
                 
                 # Check for valid format
                 if len(objects) != 4:
-                    cmds.error("Could not properly parse line {}, aborting: '{}'".format(len(measurements, line)))
+                    cmds.error("Could not properly parse line {}, aborting: '{}'".format(len(measurements), line))
                     return
                 
                 # Extract and cast some stuff
@@ -197,10 +212,12 @@ class TotalStation(object):
             # Output some stats to the user
             self.gtfo()
             print("Imported {} measurements".format(len(measurements)))
-            cmds.confirmDialog(title="Imported {} measurements".format(len(measurements)), button='OK')
+            cmds.confirmDialog(title='All done!', message="Imported {} measurements".format(len(measurements)), button='OK')
             
-        except:
-            cmds.error("Can't open or process file, please check path! Or perhaps contact Daniel if the problem persists")
+        except Exception as e:
+            message = "Can't open or process file, please check the path and make sure you've got the right tabs/comma configuration: {}".format(e)
+            cmds.confirmDialog(title='All done!', message=message, button='OK')
+            cmds.error(message)
         
         # Kill UI
         self.gtfo()
@@ -239,6 +256,13 @@ class TotalStation(object):
                 enabled = True if preset == 'custom' else False
                 cmds.floatFieldGrp(self.scaleFactorField, edit=True, enable=enabled)
                 cmds.floatFieldGrp(self.locScaleField, edit=True, enable=enabled)
+
+
+    def dropDownChange2(self, x=None):
+        value = cmds.optionMenu(self.delimiterField, query=True, value=True)
+        print value
+        cmds.optionVar(sv=('TS_delimeter', value))
+        self.currentDelimeter = value
 
 
     # User pressed cancel, kill UI
